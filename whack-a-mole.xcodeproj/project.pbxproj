@@ -21,6 +21,7 @@
 		7FBF38A62FD493F3006D8E70 /* HoleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleModel.swift; sourceTree = "<group>"; };
 		7FBF38A72FD49418006D8E70 /* HoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleViewModel.swift; sourceTree = "<group>"; };
 		7FBF38A82FD49418006D8E70 /* HoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleView.swift; sourceTree = "<group>"; };
+		7FBF38AA2FD49455006D8E70 /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -50,6 +51,7 @@
 				7FBF38A02FD48EA8006D8E70 /* Shared */,
 				7FBF38A42FD493A1006D8E70 /* App */,
 				7FBF38A52FD493F0006D8E70 /* Hole */,
+				7FBF38A92FD49450006D8E70 /* Game */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,6 +90,14 @@
 				7FBF38A82FD49418006D8E70 /* HoleView.swift */,
 			);
 			path = Hole;
+			sourceTree = "<group>";
+		};
+		7FBF38A92FD49450006D8E70 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				7FBF38AA2FD49455006D8E70 /* GameBoardView.swift */,
+			);
+			path = Game;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

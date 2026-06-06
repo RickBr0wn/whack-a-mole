@@ -4,12 +4,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ---
 
-## Phase 2: Hole
-
-- [ ] **GameBoardView:** 3x3 grid of `HoleView`s, no ViewModel yet. Include preview.
-
----
-
 ## Phase 3: Mole
 
 - [ ] **MoleModel:** Struct with `id`, `GridPosition`, `isHit: Bool`, `visibleDuration: TimeInterval`
