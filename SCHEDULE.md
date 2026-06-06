@@ -4,12 +4,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ---
 
-## Phase 1: Foundation
-
-- [ ] **App shell:** Move `whack_a_moleApp.swift` and `ContentView.swift` into `App/`, strip boilerplate from `ContentView`
-
----
-
 ## Phase 2: Hole
 
 - [ ] **HoleModel:** Struct with `GridPosition` and `id`
