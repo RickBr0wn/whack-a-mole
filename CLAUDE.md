@@ -2,7 +2,7 @@
 
 ## Build schedule
 
-Before starting any new work, read `SCHEDULE.md` in the project root. It defines the exact order of commits. Always work on the next unchecked item. Mark it `[x]` when the commit is done.
+Before starting any new work, read `SCHEDULE.md` in the project root. It defines the exact order of commits. Always work on the next item. When a commit is done, delete that line from `SCHEDULE.md` entirely. Also delete any phase heading that has no remaining items beneath it.
 
 ## Project overview
 
