@@ -6,7 +6,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 3: Mole
 
-- [ ] **MoleViewModel:** `@Observable`. Exposes mole state. `.preview` factory.
 - [ ] **MoleView:** Renders `Mole` or `MoleHit` based on `isHit`. Sits inside a hole. Include preview.
 - [ ] **MoleViewModel tests:** `test_isHit_isFalse_onInit`, `test_whack_setsIsHitToTrue`
 

@@ -23,6 +23,7 @@
 		7FBF38A82FD49418006D8E70 /* HoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleView.swift; sourceTree = "<group>"; };
 		7FBF38AA2FD49455006D8E70 /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardView.swift; sourceTree = "<group>"; };
 		7FBF38AC2FD494A2006D8E70 /* MoleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleModel.swift; sourceTree = "<group>"; };
+		7FBF38AD2FD494C9006D8E70 /* MoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -106,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				7FBF38AC2FD494A2006D8E70 /* MoleModel.swift */,
+				7FBF38AD2FD494C9006D8E70 /* MoleViewModel.swift */,
 			);
 			path = Mole;
 			sourceTree = "<group>";
