@@ -28,6 +28,7 @@
 		7FBF38B02FD4974B006D8E70 /* BombModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BombModel.swift; sourceTree = "<group>"; };
 		7FBF38B12FD497E1006D8E70 /* BombViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BombViewModel.swift; sourceTree = "<group>"; };
 		7FBF38B22FD4991E006D8E70 /* BombView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BombView.swift; sourceTree = "<group>"; };
+		7FBF38B32FD49949006D8E70 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -104,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				7FBF38AA2FD49455006D8E70 /* GameBoardView.swift */,
+				7FBF38B32FD49949006D8E70 /* GameModel.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
