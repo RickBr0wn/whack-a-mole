@@ -1,5 +1,9 @@
 # Whack-a-Mole iOS - Claude Instructions
 
+## Build schedule
+
+Before starting any new work, read `SCHEDULE.md` in the project root. It defines the exact order of commits. Always work on the next unchecked item. Mark it `[x]` when the commit is done.
+
 ## Project overview
 
 This is an iOS game built with SwiftUI and pure Apple frameworks. It starts as a classic Whack-a-Mole game and will grow into an enterprise-level product over many iterations. Scope includes: core gameplay (moles and bombs), a scoring system, difficulty progression, and sound effects.
