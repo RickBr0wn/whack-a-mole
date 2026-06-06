@@ -6,7 +6,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 1: Foundation
 
-- [ ] **Shared types:** `GridPosition`, `GameState` enum, `GameConstants` (grid size, timing defaults) in `Shared/`
 - [ ] **App shell:** Move `whack_a_moleApp.swift` and `ContentView.swift` into `App/`, strip boilerplate from `ContentView`
 
 ---
