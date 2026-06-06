@@ -11,7 +11,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 5: Core game loop
 
-- [ ] **GameViewModel:** `@Observable` + `@MainActor`. Owns the game loop — spawns moles and bombs on a timer, removes them when their `visibleDuration` expires, transitions `GameState`. `.preview` factory.
 - [ ] **GameView:** Wires `GameBoardView` to `GameViewModel`. Moles and bombs appear in holes. Include preview.
 
 ---
