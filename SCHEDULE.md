@@ -6,7 +6,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 4: Bomb
 
-- [ ] **BombView:** Renders animated bomb frames. Include preview.
 
 ---
 
