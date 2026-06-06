@@ -26,6 +26,7 @@
 		7FBF38AD2FD494C9006D8E70 /* MoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleViewModel.swift; sourceTree = "<group>"; };
 		7FBF38AE2FD49533006D8E70 /* MoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleView.swift; sourceTree = "<group>"; };
 		7FBF38B02FD4974B006D8E70 /* BombModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BombModel.swift; sourceTree = "<group>"; };
+		7FBF38B12FD497E1006D8E70 /* BombViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BombViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -120,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				7FBF38B02FD4974B006D8E70 /* BombModel.swift */,
+				7FBF38B12FD497E1006D8E70 /* BombViewModel.swift */,
 			);
 			path = Bomb;
 			sourceTree = "<group>";

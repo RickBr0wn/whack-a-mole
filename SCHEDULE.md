@@ -6,7 +6,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 4: Bomb
 
-- [ ] **BombViewModel:** `@Observable`. Cycles through `Bomb1`-`Bomb4` frames on a timer to animate. `.preview` factory.
 - [ ] **BombView:** Renders animated bomb frames. Include preview.
 
 ---
