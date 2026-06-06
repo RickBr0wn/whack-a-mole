@@ -6,7 +6,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 2: Hole
 
-- [ ] **HoleModel:** Struct with `GridPosition` and `id`
 - [ ] **HoleView + HoleViewModel:** Render `HoleBack` and `HoleFront` images, static — no interaction yet. Include preview.
 - [ ] **GameBoardView:** 3x3 grid of `HoleView`s, no ViewModel yet. Include preview.
 
