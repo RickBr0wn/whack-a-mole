@@ -19,6 +19,8 @@
 		7FBF38A22FD48EAE006D8E70 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		7FBF38A32FD48EAF006D8E70 /* GameConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConstants.swift; sourceTree = "<group>"; };
 		7FBF38A62FD493F3006D8E70 /* HoleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleModel.swift; sourceTree = "<group>"; };
+		7FBF38A72FD49418006D8E70 /* HoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleViewModel.swift; sourceTree = "<group>"; };
+		7FBF38A82FD49418006D8E70 /* HoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -82,6 +84,8 @@
 			isa = PBXGroup;
 			children = (
 				7FBF38A62FD493F3006D8E70 /* HoleModel.swift */,
+				7FBF38A72FD49418006D8E70 /* HoleViewModel.swift */,
+				7FBF38A82FD49418006D8E70 /* HoleView.swift */,
 			);
 			path = Hole;
 			sourceTree = "<group>";
