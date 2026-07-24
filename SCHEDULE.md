@@ -4,17 +4,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ---
 
-## Phase 4: Bomb
-
-
----
-
-## Phase 5: Core game loop
-
-- [ ] **GameView:** Wires `GameBoardView` to `GameViewModel`. Moles and bombs appear in holes. Include preview.
-
----
-
 ## Phase 6: Tap interaction
 
 - [ ] **Whack a mole:** Tap a `MoleView` calls `GameViewModel.whack(mole:)`. Mole switches to `MoleHit`, then disappears.

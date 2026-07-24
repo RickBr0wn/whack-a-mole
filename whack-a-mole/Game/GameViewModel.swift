@@ -12,17 +12,23 @@ final class GameViewModel {
     private var spawnTask: Task<Void, Never>?
     private var timerTask: Task<Void, Never>?
 
+    @ObservationIgnored
+    private var moleViewModels: [UUID: MoleViewModel] = [:]
+
+    @ObservationIgnored
+    private var bombViewModels: [UUID: BombViewModel] = [:]
+
     var state: GameState { game.state }
     var moles: [MoleModel] { game.moles }
     var bombs: [BombModel] { game.bombs }
     var elapsedTime: TimeInterval { game.elapsedTime }
 
     init(
-        game: GameModel = GameModel(),
+        game: GameModel? = nil,
         spawnInterval: TimeInterval = GameConstants.defaultSpawnInterval,
         bombProbability: Double = 0.15
     ) {
-        self.game = game
+        self.game = game ?? GameModel()
         self.spawnInterval = spawnInterval
         self.bombProbability = bombProbability
     }
@@ -39,6 +45,22 @@ final class GameViewModel {
         timerTask?.cancel()
         spawnTask = nil
         timerTask = nil
+        moleViewModels.removeAll()
+        bombViewModels.removeAll()
+    }
+
+    func moleViewModel(for mole: MoleModel) -> MoleViewModel {
+        if let existing = moleViewModels[mole.id] { return existing }
+        let new = MoleViewModel(mole: mole)
+        moleViewModels[mole.id] = new
+        return new
+    }
+
+    func bombViewModel(for bomb: BombModel) -> BombViewModel {
+        if let existing = bombViewModels[bomb.id] { return existing }
+        let new = BombViewModel(bomb: bomb)
+        bombViewModels[bomb.id] = new
+        return new
     }
 
     private func startSpawnLoop() {
@@ -94,6 +116,7 @@ final class GameViewModel {
             try? await Task.sleep(for: .seconds(duration))
             guard let self else { return }
             self.game.moles.removeAll { $0.id == id }
+            self.moleViewModels[id] = nil
         }
     }
 
@@ -106,6 +129,7 @@ final class GameViewModel {
             try? await Task.sleep(for: .seconds(duration))
             guard let self else { return }
             self.game.bombs.removeAll { $0.id == id }
+            self.bombViewModels[id] = nil
         }
     }
 }
