@@ -24,6 +24,8 @@ struct GameView: View {
             GameBoardView(viewModel: viewModel)
         }
         .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Theme.ground.ignoresSafeArea())
     }
 
     @ViewBuilder
