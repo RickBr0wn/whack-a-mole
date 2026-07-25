@@ -6,19 +6,47 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		958E2EAA05F6208727CEF3F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBDA9AA5C44F0C00F67AA8 /* Foundation.framework */; };
+		DDEBA63CF02712C59011236C /* GameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55D25FCE7CC479633FE1B15 /* GameViewModelTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		70F78D2651B910BA8A7A249B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7FBF38862FD4886D006D8E70 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FBF388D2FD4886D006D8E70;
+			remoteInfo = "whack-a-mole";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		42EBDA9AA5C44F0C00F67AA8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		616CC519E0440EC7958D7F48 /* whack-a-moleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "whack-a-moleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FBF388E2FD4886D006D8E70 /* whack-a-mole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "whack-a-mole.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F55D25FCE7CC479633FE1B15 /* GameViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GameViewModelTests.swift; path = GameViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7FBF38902FD4886D006D8E70 /* whack-a-mole */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "whack-a-mole";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		76ADEFDAC9A4FE054572142E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				958E2EAA05F6208727CEF3F1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FBF388B2FD4886D006D8E70 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -29,11 +57,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040C9C9FE68645DC6DB2C87B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				42EBDA9AA5C44F0C00F67AA8 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		7FBF38852FD4886D006D8E70 = {
 			isa = PBXGroup;
 			children = (
 				7FBF388F2FD4886D006D8E70 /* Products */,
 				7FBF38902FD4886D006D8E70 /* whack-a-mole */,
+				81D51CE4358166E755446B51 /* Frameworks */,
+				F89C2F63617FEDDF3D1249F7 /* whack-a-moleTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -41,8 +79,26 @@
 			isa = PBXGroup;
 			children = (
 				7FBF388E2FD4886D006D8E70 /* whack-a-mole.app */,
+				616CC519E0440EC7958D7F48 /* whack-a-moleTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		81D51CE4358166E755446B51 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				040C9C9FE68645DC6DB2C87B /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F89C2F63617FEDDF3D1249F7 /* whack-a-moleTests */ = {
+			isa = PBXGroup;
+			children = (
+				F55D25FCE7CC479633FE1B15 /* GameViewModelTests.swift */,
+			);
+			name = "whack-a-moleTests";
+			path = "whack-a-moleTests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -64,11 +120,27 @@
 				7FBF38902FD4886D006D8E70 /* whack-a-mole */,
 			);
 			name = "whack-a-mole";
-			packageProductDependencies = (
-			);
 			productName = "whack-a-mole";
 			productReference = 7FBF388E2FD4886D006D8E70 /* whack-a-mole.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B0F7CDD145B85EA38D39D6F4 /* whack-a-moleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75FF71BB0C2566C508760BE5 /* Build configuration list for PBXNativeTarget "whack-a-moleTests" */;
+			buildPhases = (
+				5FA8DF5C820FDB3711B52153 /* Sources */,
+				76ADEFDAC9A4FE054572142E /* Frameworks */,
+				5D073C09934EDDA0056FC649 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD696172FC2FAFCFD517AACD /* PBXTargetDependency */,
+			);
+			name = "whack-a-moleTests";
+			productName = "whack-a-moleTests";
+			productReference = 616CC519E0440EC7958D7F48 /* whack-a-moleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -82,6 +154,9 @@
 				TargetAttributes = {
 					7FBF388D2FD4886D006D8E70 = {
 						CreatedOnToolsVersion = 26.5;
+					};
+					B0F7CDD145B85EA38D39D6F4 = {
+						TestTargetID = 7FBF388D2FD4886D006D8E70;
 					};
 				};
 			};
@@ -100,11 +175,19 @@
 			projectRoot = "";
 			targets = (
 				7FBF388D2FD4886D006D8E70 /* whack-a-mole */,
+				B0F7CDD145B85EA38D39D6F4 /* whack-a-moleTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5D073C09934EDDA0056FC649 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FBF388C2FD4886D006D8E70 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +198,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5FA8DF5C820FDB3711B52153 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDEBA63CF02712C59011236C /* GameViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FBF388A2FD4886D006D8E70 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +215,35 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		AD696172FC2FAFCFD517AACD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "whack-a-mole";
+			target = 7FBF388D2FD4886D006D8E70 /* whack-a-mole */;
+			targetProxy = 70F78D2651B910BA8A7A249B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		75386D8D97A9D4067FF4C1DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.uk.rickbrown.whack-a-moleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/whack-a-mole.app/whack-a-mole";
+				TEST_TARGET_NAME = "whack-a-mole";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		7FBF38972FD4886F006D8E70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -310,9 +429,36 @@
 			};
 			name = Release;
 		};
+		CA43CC90EEE95ACB8C1F7018 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.uk.rickbrown.whack-a-moleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/whack-a-mole.app/whack-a-mole";
+				TEST_TARGET_NAME = "whack-a-mole";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		75FF71BB0C2566C508760BE5 /* Build configuration list for PBXNativeTarget "whack-a-moleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75386D8D97A9D4067FF4C1DB /* Release */,
+				CA43CC90EEE95ACB8C1F7018 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7FBF38892FD4886D006D8E70 /* Build configuration list for PBXProject "whack-a-mole" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

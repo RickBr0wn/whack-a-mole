@@ -13,8 +13,8 @@ struct GameBoardView: View {
             let boardWidth = geometry.size.width * Self.boardWidthFraction
             let columns = CGFloat(GameConstants.gridColumns)
             let rows = CGFloat(GameConstants.gridRows)
-            let cellWidth = (boardWidth - Self.minSpacing * (columns - 1)) / columns
-            let cellHeight = (geometry.size.height - Self.minSpacing * (rows - 1)) / rows
+            let cellWidth = max(0, (boardWidth - Self.minSpacing * (columns - 1)) / columns)
+            let cellHeight = max(0, (geometry.size.height - Self.minSpacing * (rows - 1)) / rows)
             let cellSize = min(cellWidth, cellHeight)
             let leftoverWidth = boardWidth - cellSize * columns
             let horizontalSpacing = columns > 1 ? max(Self.minSpacing, leftoverWidth / (columns - 1)) : Self.minSpacing

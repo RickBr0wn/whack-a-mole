@@ -26,8 +26,9 @@ struct MoleView: View {
 }
 
 #Preview("Mole hit") {
-    let viewModel = MoleViewModel.preview
-    viewModel.whack()
+    let viewModel = MoleViewModel(
+        mole: MoleModel(position: GridPosition(column: 1, row: 1), isHit: true, visibleDuration: 1.5)
+    )
     return ZStack {
         Image("HoleBack")
             .resizable()
