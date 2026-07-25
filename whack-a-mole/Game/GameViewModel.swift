@@ -159,6 +159,26 @@ final class GameViewModel {
         }
     }
 
+    func triggerBomb(bomb: BombModel) {
+        guard let index = game.bombs.firstIndex(where: { $0.id == bomb.id }), !game.bombs[index].isExploded else {
+            return
+        }
+
+        let id = bomb.id
+        bombDespawnTasks[id]?.cancel()
+        bombDespawnTasks[id] = nil
+
+        game.bombs[index].isExploded = true
+        bombViewModels[id]?.explode()
+
+        spawnTask?.cancel()
+        timerTask?.cancel()
+        spawnTask = nil
+        timerTask = nil
+
+        game.state = .gameOver
+    }
+
     func spawnBomb(at position: GridPosition) {
         let bomb = BombModel(position: position)
         game.bombs.append(bomb)
