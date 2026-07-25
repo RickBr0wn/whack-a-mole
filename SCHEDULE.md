@@ -6,7 +6,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 7: Scoring
 
-- [ ] **ScoreViewModel:** `@Observable`. Wraps `ScoreModel`. Persists `highScore` to `UserDefaults`. `.preview` factory.
 - [ ] **ScoreView:** Displays current points, combo multiplier, and high score. Include preview.
 - [ ] **Wire scoring into GameViewModel:** `whack(mole:)` increments score. Combo increments on consecutive hits, resets on miss or timeout.
 
