@@ -2,13 +2,16 @@ import SwiftUI
 
 struct GameView: View {
     @State private var viewModel: GameViewModel
+    @State private var scoreViewModel: ScoreViewModel
 
-    init(viewModel: GameViewModel) {
+    init(viewModel: GameViewModel, scoreViewModel: ScoreViewModel = ScoreViewModel()) {
         self._viewModel = State(initialValue: viewModel)
+        self._scoreViewModel = State(initialValue: scoreViewModel)
     }
 
     init() {
         self._viewModel = State(initialValue: GameViewModel())
+        self._scoreViewModel = State(initialValue: ScoreViewModel())
     }
 
     var body: some View {
@@ -20,6 +23,8 @@ struct GameView: View {
                 controlButton
             }
             .padding(.horizontal)
+
+            ScoreView(viewModel: scoreViewModel)
 
             GameBoardView(viewModel: viewModel)
         }
@@ -42,5 +47,5 @@ struct GameView: View {
 }
 
 #Preview {
-    GameView(viewModel: .preview)
+    GameView(viewModel: .preview, scoreViewModel: .preview)
 }
