@@ -6,15 +6,17 @@ struct GameBoardView: View {
     private static let minSpacing: CGFloat = 16
     private static let holeAspectRatio: CGFloat = 261.0 / 107.0
     private static let clipInset: CGFloat = 2
+    private static let boardWidthFraction: CGFloat = 2.0 / 3.0
 
     var body: some View {
         GeometryReader { geometry in
+            let boardWidth = geometry.size.width * Self.boardWidthFraction
             let columns = CGFloat(GameConstants.gridColumns)
             let rows = CGFloat(GameConstants.gridRows)
-            let cellWidth = (geometry.size.width - Self.minSpacing * (columns - 1)) / columns
+            let cellWidth = (boardWidth - Self.minSpacing * (columns - 1)) / columns
             let cellHeight = (geometry.size.height - Self.minSpacing * (rows - 1)) / rows
             let cellSize = min(cellWidth, cellHeight)
-            let leftoverWidth = geometry.size.width - cellSize * columns
+            let leftoverWidth = boardWidth - cellSize * columns
             let horizontalSpacing = columns > 1 ? max(Self.minSpacing, leftoverWidth / (columns - 1)) : Self.minSpacing
 
             VStack(spacing: Self.minSpacing) {
@@ -26,6 +28,7 @@ struct GameBoardView: View {
                     }
                 }
             }
+            .frame(width: boardWidth, height: geometry.size.height)
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
         .padding()
