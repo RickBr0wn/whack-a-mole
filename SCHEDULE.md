@@ -6,7 +6,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 7: Scoring
 
-- [ ] **ScoreModel:** Struct with `points: Int`, `combo: Int`, `highScore: Int`. Pure logic: `func adding(hit:) -> ScoreModel`
 - [ ] **ScoreViewModel:** `@Observable`. Wraps `ScoreModel`. Persists `highScore` to `UserDefaults`. `.preview` factory.
 - [ ] **ScoreView:** Displays current points, combo multiplier, and high score. Include preview.
 - [ ] **Wire scoring into GameViewModel:** `whack(mole:)` increments score. Combo increments on consecutive hits, resets on miss or timeout.
