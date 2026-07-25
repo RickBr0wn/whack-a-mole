@@ -5,6 +5,7 @@ struct GameBoardView: View {
 
     private static let spacing: CGFloat = 16
     private static let holeAspectRatio: CGFloat = 261.0 / 107.0
+    private static let clipInset: CGFloat = 2
 
     var body: some View {
         GeometryReader { geometry in
@@ -32,7 +33,7 @@ struct GameBoardView: View {
     private func cell(at position: GridPosition, size: CGFloat) -> some View {
         let holeHeight = size / Self.holeAspectRatio
         let holeTop = (size - holeHeight) / 2
-        let visibleHeight = holeTop + holeHeight
+        let visibleHeight = holeTop + holeHeight - Self.clipInset
 
         ZStack(alignment: .top) {
             Image("HoleBack")
@@ -51,7 +52,7 @@ struct GameBoardView: View {
                 .frame(width: size, height: holeHeight)
                 .offset(y: holeTop)
         }
-        .frame(width: size, height: size)
+        .frame(width: size, height: size, alignment: .top)
     }
 
     @ViewBuilder
