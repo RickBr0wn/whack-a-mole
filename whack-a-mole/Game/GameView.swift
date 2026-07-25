@@ -35,7 +35,7 @@ struct GameView: View {
                     .ignoresSafeArea()
 
                 GameOverView(scoreViewModel: viewModel.scoreViewModel) {
-                    viewModel.start()
+                    viewModel.restart()
                 }
             }
         }

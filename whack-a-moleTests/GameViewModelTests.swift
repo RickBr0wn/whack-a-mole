@@ -358,6 +358,60 @@ final class GameViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.moles.first?.visibleDuration, viewModel.difficulty.visibleDuration)
     }
 
+    func test_restart_resetsGameStateDifficultyAndScore() {
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
+        viewModel.spawnMole(at: GridPosition(column: 0, row: 0))
+        guard let mole = viewModel.moles.first else {
+            return XCTFail("Expected a spawned mole")
+        }
+        viewModel.whack(mole: mole)
+        viewModel.tick(by: GameConstants.levelUpInterval)
+        defer { viewModel.stop() }
+
+        viewModel.restart()
+
+        XCTAssertEqual(viewModel.state, .playing)
+        XCTAssertTrue(viewModel.moles.isEmpty)
+        XCTAssertTrue(viewModel.bombs.isEmpty)
+        XCTAssertEqual(viewModel.level, 1)
+        XCTAssertEqual(viewModel.scoreViewModel.points, 0)
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 0)
+    }
+
+    func test_restart_preservesHighScore() {
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
+        viewModel.spawnMole(at: GridPosition(column: 0, row: 0))
+        guard let mole = viewModel.moles.first else {
+            return XCTFail("Expected a spawned mole")
+        }
+        viewModel.whack(mole: mole)
+        let highScoreBeforeRestart = viewModel.scoreViewModel.highScore
+        defer { viewModel.stop() }
+
+        viewModel.restart()
+
+        XCTAssertEqual(viewModel.scoreViewModel.highScore, highScoreBeforeRestart)
+    }
+
+    func test_restart_cancelsStaleDespawnTasks_soTheyDontCorruptNewGameScore() async {
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
+        viewModel.spawnMole(at: GridPosition(column: 0, row: 0))
+        defer { viewModel.stop() }
+
+        viewModel.restart()
+
+        viewModel.spawnMole(at: GridPosition(column: 1, row: 1))
+        guard let freshMole = viewModel.moles.first(where: { $0.position == GridPosition(column: 1, row: 1) }) else {
+            return XCTFail("Expected a fresh spawned mole")
+        }
+        viewModel.whack(mole: freshMole)
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 1)
+
+        try? await Task.sleep(for: .seconds(GameConstants.defaultMoleVisibleDuration + 0.3))
+
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 1)
+    }
+
     private func makeIsolatedScoreViewModel() -> ScoreViewModel {
         let userDefaults = UserDefaults(suiteName: UUID().uuidString)!
         return ScoreViewModel(userDefaults: userDefaults)
