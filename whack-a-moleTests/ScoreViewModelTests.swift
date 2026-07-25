@@ -51,4 +51,12 @@ final class ScoreViewModelTests: XCTestCase {
 
         XCTAssertEqual(userDefaults.integer(forKey: "highScore"), GameConstants.basePointsPerHit)
     }
+
+    func test_register_hit_withMultiplier_doublesPoints() {
+        let viewModel = ScoreViewModel(userDefaults: userDefaults)
+
+        viewModel.register(hit: true, multiplier: 2)
+
+        XCTAssertEqual(viewModel.points, GameConstants.basePointsPerHit * 2)
+    }
 }

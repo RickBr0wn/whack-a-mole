@@ -228,6 +228,60 @@ final class GameViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.scoreViewModel.combo, 0)
     }
 
+    func test_whack_hatMole_firstHit_cracksWithoutScoringOrRemoving() {
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
+        let position = GridPosition(column: 0, row: 0)
+        viewModel.spawnMole(at: position, wearsHat: true)
+        defer { viewModel.stop() }
+
+        guard let mole = viewModel.moles.first else {
+            return XCTFail("Expected a spawned mole")
+        }
+
+        viewModel.whack(mole: mole)
+
+        XCTAssertFalse(viewModel.moles.first?.isHit ?? true)
+        XCTAssertEqual(viewModel.moles.count, 1)
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 0)
+        XCTAssertEqual(viewModel.scoreViewModel.points, 0)
+    }
+
+    func test_whack_hatMole_secondHit_defeatsAndAwardsDoublePoints() {
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
+        let position = GridPosition(column: 0, row: 0)
+        viewModel.spawnMole(at: position, wearsHat: true)
+        defer { viewModel.stop() }
+
+        guard let mole = viewModel.moles.first else {
+            return XCTFail("Expected a spawned mole")
+        }
+
+        viewModel.whack(mole: mole)
+        viewModel.whack(mole: mole)
+
+        XCTAssertTrue(viewModel.moles.first?.isHit ?? false)
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 1)
+        XCTAssertEqual(viewModel.scoreViewModel.points, GameConstants.basePointsPerHit * 2)
+    }
+
+    func test_hatMoleTimeout_afterCrack_registersMiss() async {
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
+        let position = GridPosition(column: 0, row: 0)
+        viewModel.spawnMole(at: position, wearsHat: true)
+        defer { viewModel.stop() }
+
+        guard let mole = viewModel.moles.first else {
+            return XCTFail("Expected a spawned mole")
+        }
+        viewModel.whack(mole: mole)
+
+        try? await Task.sleep(for: .seconds(GameConstants.defaultMoleVisibleDuration + 0.3))
+
+        XCTAssertTrue(viewModel.moles.isEmpty)
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 0)
+        XCTAssertEqual(viewModel.scoreViewModel.points, 0)
+    }
+
     private func makeIsolatedScoreViewModel() -> ScoreViewModel {
         let userDefaults = UserDefaults(suiteName: UUID().uuidString)!
         return ScoreViewModel(userDefaults: userDefaults)

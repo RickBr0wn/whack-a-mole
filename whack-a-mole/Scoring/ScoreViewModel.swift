@@ -23,8 +23,8 @@ final class ScoreViewModel {
         )
     }
 
-    func register(hit: Bool) {
-        score = score.adding(hit: hit)
+    func register(hit: Bool, multiplier: Int = 1) {
+        score = score.adding(hit: hit, multiplier: multiplier)
         userDefaults.set(score.highScore, forKey: Self.highScoreKey)
     }
 }

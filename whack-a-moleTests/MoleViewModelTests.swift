@@ -10,4 +10,15 @@ final class MoleViewModelTests: XCTestCase {
 
         XCTAssertTrue(viewModel.isHit)
     }
+
+    func test_markCracked_setsIsCrackedToTrue() {
+        let viewModel = MoleViewModel(
+            mole: MoleModel(position: GridPosition(column: 0, row: 0), wearsHat: true)
+        )
+
+        viewModel.markCracked()
+
+        XCTAssertTrue(viewModel.isCracked)
+        XCTAssertFalse(viewModel.isHit)
+    }
 }

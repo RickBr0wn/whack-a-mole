@@ -54,4 +54,13 @@ final class ScoreModelTests: XCTestCase {
 
         XCTAssertEqual(result.highScore, 500)
     }
+
+    func test_adding_hit_withMultiplier_doublesAwardedPoints() {
+        let score = ScoreModel()
+
+        let result = score.adding(hit: true, multiplier: 2)
+
+        XCTAssertEqual(result.combo, 1)
+        XCTAssertEqual(result.points, GameConstants.basePointsPerHit * 2)
+    }
 }

@@ -9,6 +9,7 @@ final class GameViewModel {
 
     let spawnInterval: TimeInterval
     let bombProbability: Double
+    let hatMoleProbability: Double
 
     private var spawnTask: Task<Void, Never>?
     private var timerTask: Task<Void, Never>?
@@ -34,12 +35,14 @@ final class GameViewModel {
         game: GameModel? = nil,
         scoreViewModel: ScoreViewModel = ScoreViewModel(),
         spawnInterval: TimeInterval = GameConstants.defaultSpawnInterval,
-        bombProbability: Double = 0.15
+        bombProbability: Double = 0.15,
+        hatMoleProbability: Double = 0.2
     ) {
         self.game = game ?? GameModel()
         self.scoreViewModel = scoreViewModel
         self.spawnInterval = spawnInterval
         self.bombProbability = bombProbability
+        self.hatMoleProbability = hatMoleProbability
     }
 
     func start() {
@@ -108,7 +111,8 @@ final class GameViewModel {
         if Double.random(in: 0..<1) < bombProbability {
             spawnBomb(at: position)
         } else {
-            spawnMole(at: position)
+            let wearsHat = Double.random(in: 0..<1) < hatMoleProbability
+            spawnMole(at: position, wearsHat: wearsHat)
         }
     }
 
@@ -130,8 +134,8 @@ final class GameViewModel {
         }
     }
 
-    func spawnMole(at position: GridPosition) {
-        let mole = MoleModel(position: position)
+    func spawnMole(at position: GridPosition, wearsHat: Bool = false) {
+        let mole = MoleModel(position: position, wearsHat: wearsHat)
         game.moles.append(mole)
         let id = mole.id
         moleViewModels[id] = MoleViewModel(mole: mole)
@@ -160,11 +164,18 @@ final class GameViewModel {
         }
 
         let id = mole.id
+
+        if game.moles[index].wearsHat, !game.moles[index].isCracked {
+            game.moles[index].isCracked = true
+            moleViewModels[id]?.markCracked()
+            return
+        }
+
         moleDespawnTasks[id]?.cancel()
 
         game.moles[index].isHit = true
         moleViewModels[id]?.markHit()
-        scoreViewModel.register(hit: true)
+        scoreViewModel.register(hit: true, multiplier: game.moles[index].wearsHat ? 2 : 1)
 
         moleDespawnTasks[id] = scheduleDespawn(after: GameConstants.moleHitDisplayDuration) { [weak self] in
             guard let self else { return }

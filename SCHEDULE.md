@@ -4,12 +4,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ---
 
-## Phase 8: Hat mole variant
-
-- [ ] **HatMole:** Extend `MoleModel` with `wearsHat: Bool`. `MoleView` renders `MoleHat`, `MoleHatHit`, or `MoleHatCracks` variants. Hat moles are worth double points.
-
----
-
 ## Phase 9: Difficulty progression
 
 - [ ] **DifficultyModel:** Struct with `level: Int`, `spawnInterval: TimeInterval`, `visibleDuration: TimeInterval`. Pure function: `func nextLevel() -> DifficultyModel`
