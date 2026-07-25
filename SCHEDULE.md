@@ -4,12 +4,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ---
 
-## Phase 9: Difficulty progression
-
-- [ ] **Wire difficulty into GameViewModel:** Level increases every 30 seconds. Spawn interval shortens, visible duration shortens. Bomb frequency increases with level.
-
----
-
 ## Phase 10: Game over and restart
 
 - [ ] **GameOverView:** Displays final score, high score, and a restart button. Shown when `GameState == .gameOver`. Include preview.

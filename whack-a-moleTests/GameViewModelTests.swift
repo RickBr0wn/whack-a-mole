@@ -282,6 +282,82 @@ final class GameViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.scoreViewModel.points, 0)
     }
 
+    func test_tick_incrementsElapsedTime() {
+        let viewModel = GameViewModel(game: GameModel(state: .playing))
+        defer { viewModel.stop() }
+
+        viewModel.tick(by: 0.1)
+
+        XCTAssertEqual(viewModel.elapsedTime, 0.1, accuracy: 0.0001)
+    }
+
+    func test_tick_reaching30Seconds_incrementsLevel() {
+        let viewModel = GameViewModel(game: GameModel(state: .playing))
+        defer { viewModel.stop() }
+
+        viewModel.tick(by: GameConstants.levelUpInterval)
+
+        XCTAssertEqual(viewModel.level, 2)
+    }
+
+    func test_tick_beforeLevelUpInterval_doesNotIncrementLevel() {
+        let viewModel = GameViewModel(game: GameModel(state: .playing))
+        defer { viewModel.stop() }
+
+        viewModel.tick(by: GameConstants.levelUpInterval - 1)
+
+        XCTAssertEqual(viewModel.level, 1)
+    }
+
+    func test_tick_levelingUp_shortensDifficultySpawnIntervalAndVisibleDuration() {
+        let viewModel = GameViewModel(
+            game: GameModel(state: .playing),
+            spawnInterval: 1.0
+        )
+        defer { viewModel.stop() }
+
+        viewModel.tick(by: GameConstants.levelUpInterval)
+
+        XCTAssertEqual(viewModel.difficulty.spawnInterval, 1.0 * GameConstants.difficultyDecayFactor, accuracy: 0.0001)
+    }
+
+    func test_effectiveBombProbability_increasesWithLevel() {
+        let viewModel = GameViewModel(
+            game: GameModel(state: .playing),
+            bombProbability: 0.15
+        )
+        defer { viewModel.stop() }
+
+        viewModel.tick(by: GameConstants.levelUpInterval)
+
+        XCTAssertEqual(
+            viewModel.effectiveBombProbability,
+            0.15 + GameConstants.bombProbabilityIncreasePerLevel,
+            accuracy: 0.0001
+        )
+    }
+
+    func test_effectiveBombProbability_isClampedToMaximum() {
+        let viewModel = GameViewModel(game: GameModel(state: .playing), bombProbability: 0.49)
+        defer { viewModel.stop() }
+
+        for _ in 0..<50 {
+            viewModel.tick(by: GameConstants.levelUpInterval)
+        }
+
+        XCTAssertEqual(viewModel.effectiveBombProbability, GameConstants.maxBombProbability, accuracy: 0.0001)
+    }
+
+    func test_spawnMole_usesCurrentDifficultyVisibleDuration() {
+        let viewModel = GameViewModel(game: GameModel(state: .playing), spawnInterval: 1.0)
+        defer { viewModel.stop() }
+
+        viewModel.tick(by: GameConstants.levelUpInterval)
+        viewModel.spawnMole(at: GridPosition(column: 0, row: 0))
+
+        XCTAssertEqual(viewModel.moles.first?.visibleDuration, viewModel.difficulty.visibleDuration)
+    }
+
     private func makeIsolatedScoreViewModel() -> ScoreViewModel {
         let userDefaults = UserDefaults(suiteName: UUID().uuidString)!
         return ScoreViewModel(userDefaults: userDefaults)
