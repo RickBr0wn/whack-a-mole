@@ -88,6 +88,12 @@ final class GameViewModel {
         nextLevelUpTime = GameConstants.levelUpInterval
     }
 
+    func restart() {
+        stop()
+        scoreViewModel.reset()
+        start()
+    }
+
     func moleViewModel(for mole: MoleModel) -> MoleViewModel {
         moleViewModels[mole.id] ?? MoleViewModel(mole: mole)
     }

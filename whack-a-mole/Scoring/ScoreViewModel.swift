@@ -27,6 +27,10 @@ final class ScoreViewModel {
         score = score.adding(hit: hit, multiplier: multiplier)
         userDefaults.set(score.highScore, forKey: Self.highScoreKey)
     }
+
+    func reset() {
+        score = ScoreModel(points: 0, combo: 0, highScore: score.highScore)
+    }
 }
 
 extension ScoreViewModel {

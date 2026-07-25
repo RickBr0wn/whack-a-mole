@@ -4,12 +4,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ---
 
-## Phase 10: Game over and restart
-
-- [ ] **Restart flow:** `GameViewModel.restart()` resets all state cleanly.
-
----
-
 ## Phase 11: Audio
 
 - [ ] **AudioManager:** `actor`. Loads and plays sounds using `AVFoundation`. Methods: `playWhack()`, `playBombExplosion()`, `playGameOver()`.
