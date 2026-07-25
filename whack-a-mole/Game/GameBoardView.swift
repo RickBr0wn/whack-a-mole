@@ -31,12 +31,15 @@ struct GameBoardView: View {
     @ViewBuilder
     private func cell(at position: GridPosition, size: CGFloat) -> some View {
         let holeHeight = size / Self.holeAspectRatio
-        let visibleHeight = (size + holeHeight) / 2
+        let holeTop = (size - holeHeight) / 2
+        let visibleHeight = holeTop + holeHeight
 
-        ZStack {
+        ZStack(alignment: .top) {
             Image("HoleBack")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+                .frame(width: size, height: holeHeight)
+                .offset(y: holeTop)
 
             occupant(at: position)
                 .frame(width: size, height: visibleHeight, alignment: .top)
@@ -45,6 +48,8 @@ struct GameBoardView: View {
             Image("HoleFront")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+                .frame(width: size, height: holeHeight)
+                .offset(y: holeTop)
         }
         .frame(width: size, height: size)
     }
@@ -53,12 +58,8 @@ struct GameBoardView: View {
     private func occupant(at position: GridPosition) -> some View {
         if let mole = viewModel.moles.first(where: { $0.position == position }) {
             MoleView(viewModel: viewModel.moleViewModel(for: mole))
-                .scaleEffect(1.4)
-                .offset(y: -8)
         } else if let bomb = viewModel.bombs.first(where: { $0.position == position }) {
             BombView(viewModel: viewModel.bombViewModel(for: bomb))
-                .scaleEffect(1.4)
-                .offset(y: -8)
         }
     }
 }
