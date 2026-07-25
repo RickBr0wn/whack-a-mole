@@ -6,7 +6,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 10: Game over and restart
 
-- [ ] **GameOverView:** Displays final score, high score, and a restart button. Shown when `GameState == .gameOver`. Include preview.
 - [ ] **Restart flow:** `GameViewModel.restart()` resets all state cleanly.
 
 ---

@@ -12,22 +12,33 @@ struct GameView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
-            HStack {
-                Text(String(format: "Time: %.1fs", viewModel.elapsedTime))
-                    .font(.title3.monospacedDigit())
-                Spacer()
-                controlButton
+        ZStack {
+            VStack(spacing: 16) {
+                HStack {
+                    Text(String(format: "Time: %.1fs", viewModel.elapsedTime))
+                        .font(.title3.monospacedDigit())
+                    Spacer()
+                    controlButton
+                }
+                .padding(.horizontal)
+
+                ScoreView(viewModel: viewModel.scoreViewModel)
+
+                GameBoardView(viewModel: viewModel)
             }
-            .padding(.horizontal)
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Theme.ground.ignoresSafeArea())
 
-            ScoreView(viewModel: viewModel.scoreViewModel)
+            if viewModel.state == .gameOver {
+                Color.black.opacity(0.6)
+                    .ignoresSafeArea()
 
-            GameBoardView(viewModel: viewModel)
+                GameOverView(scoreViewModel: viewModel.scoreViewModel) {
+                    viewModel.start()
+                }
+            }
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Theme.ground.ignoresSafeArea())
     }
 
     @ViewBuilder
@@ -45,4 +56,16 @@ struct GameView: View {
 
 #Preview {
     GameView(viewModel: .preview)
+}
+
+#Preview("Game over") {
+    let viewModel = GameViewModel(
+        game: GameModel(
+            state: .gameOver,
+            bombs: [BombModel(position: GridPosition(column: 1, row: 1), isExploded: true)],
+            elapsedTime: 18.4
+        ),
+        scoreViewModel: .preview
+    )
+    return GameView(viewModel: viewModel)
 }
