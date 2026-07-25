@@ -2,7 +2,6 @@ import SwiftUI
 
 struct BombView: View {
     let viewModel: BombViewModel
-    var onTap: () -> Void = {}
 
     var body: some View {
         Image(viewModel.currentImageName)
@@ -10,7 +9,6 @@ struct BombView: View {
             .aspectRatio(contentMode: .fit)
             .onAppear { viewModel.startAnimating() }
             .onDisappear { viewModel.stopAnimating() }
-            .onTapGesture(perform: onTap)
     }
 }
 

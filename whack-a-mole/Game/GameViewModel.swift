@@ -140,6 +140,14 @@ final class GameViewModel {
         }
     }
 
+    func handleTap(at position: GridPosition) {
+        if let mole = game.moles.first(where: { $0.position == position }) {
+            whack(mole: mole)
+        } else if let bomb = game.bombs.first(where: { $0.position == position }) {
+            triggerBomb(bomb: bomb)
+        }
+    }
+
     func whack(mole: MoleModel) {
         guard let index = game.moles.firstIndex(where: { $0.id == mole.id }), !game.moles[index].isHit else {
             return
