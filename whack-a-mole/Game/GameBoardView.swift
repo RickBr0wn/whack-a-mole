@@ -67,7 +67,9 @@ struct GameBoardView: View {
                 viewModel.whack(mole: mole)
             }
         } else if let bomb = viewModel.bombs.first(where: { $0.position == position }) {
-            BombView(viewModel: viewModel.bombViewModel(for: bomb))
+            BombView(viewModel: viewModel.bombViewModel(for: bomb)) {
+                viewModel.triggerBomb(bomb: bomb)
+            }
         }
     }
 }

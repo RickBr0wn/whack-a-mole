@@ -105,4 +105,40 @@ final class GameViewModelTests: XCTestCase {
 
         XCTAssertTrue(viewModel.moles.isEmpty)
     }
+
+    func test_triggerBomb_marksBombAsExplodedAndEndsGame() {
+        let viewModel = GameViewModel()
+        viewModel.spawnBomb(at: GridPosition(column: 0, row: 0))
+        defer { viewModel.stop() }
+
+        guard let bomb = viewModel.bombs.first else {
+            return XCTFail("Expected a spawned bomb")
+        }
+
+        viewModel.triggerBomb(bomb: bomb)
+
+        XCTAssertTrue(viewModel.bombs.first?.isExploded ?? false)
+        XCTAssertTrue(viewModel.bombViewModel(for: bomb).isExploded)
+        XCTAssertEqual(viewModel.state, .gameOver)
+    }
+
+    func test_triggerBomb_doesNothing_forUnknownBomb() {
+        let viewModel = GameViewModel(game: GameModel(state: .playing))
+        defer { viewModel.stop() }
+        let unknownBomb = BombModel(position: GridPosition(column: 2, row: 2))
+
+        viewModel.triggerBomb(bomb: unknownBomb)
+
+        XCTAssertEqual(viewModel.state, .playing)
+    }
+
+    func test_triggerBomb_doesNothing_ifAlreadyExploded() {
+        let explodedBomb = BombModel(position: GridPosition(column: 0, row: 0), isExploded: true)
+        let viewModel = GameViewModel(game: GameModel(state: .gameOver, bombs: [explodedBomb]))
+        defer { viewModel.stop() }
+
+        viewModel.triggerBomb(bomb: explodedBomb)
+
+        XCTAssertEqual(viewModel.state, .gameOver)
+    }
 }
