@@ -7,40 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7FBF38922FD4886D006D8E70 /* whack_a_moleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBF38912FD4886D006D8E70 /* whack_a_moleApp.swift */; };
-		7FBF38942FD4886D006D8E70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBF38932FD4886D006D8E70 /* ContentView.swift */; };
+		958E2EAA05F6208727CEF3F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBDA9AA5C44F0C00F67AA8 /* Foundation.framework */; };
+		DDEBA63CF02712C59011236C /* GameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55D25FCE7CC479633FE1B15 /* GameViewModelTests.swift */; };
+		BA4078795E4A4669A516EFE4 /* MoleViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F33129FDCC0441187051D20 /* MoleViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		70F78D2651B910BA8A7A249B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7FBF38862FD4886D006D8E70 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FBF388D2FD4886D006D8E70;
+			remoteInfo = "whack-a-mole";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		42EBDA9AA5C44F0C00F67AA8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		616CC519E0440EC7958D7F48 /* whack-a-moleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "whack-a-moleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FBF388E2FD4886D006D8E70 /* whack-a-mole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "whack-a-mole.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FBF38912FD4886D006D8E70 /* whack_a_moleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = whack_a_moleApp.swift; sourceTree = "<group>"; };
-		7FBF38932FD4886D006D8E70 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		7FBF38A12FD48EAE006D8E70 /* GridPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPosition.swift; sourceTree = "<group>"; };
-		7FBF38A22FD48EAE006D8E70 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
-		7FBF38A32FD48EAF006D8E70 /* GameConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConstants.swift; sourceTree = "<group>"; };
-		7FBF38A62FD493F3006D8E70 /* HoleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleModel.swift; sourceTree = "<group>"; };
-		7FBF38A72FD49418006D8E70 /* HoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleViewModel.swift; sourceTree = "<group>"; };
-		7FBF38A82FD49418006D8E70 /* HoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleView.swift; sourceTree = "<group>"; };
-		7FBF38AA2FD49455006D8E70 /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardView.swift; sourceTree = "<group>"; };
-		7FBF38AC2FD494A2006D8E70 /* MoleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleModel.swift; sourceTree = "<group>"; };
-		7FBF38AD2FD494C9006D8E70 /* MoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleViewModel.swift; sourceTree = "<group>"; };
-		7FBF38AE2FD49533006D8E70 /* MoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleView.swift; sourceTree = "<group>"; };
-		7FBF38B02FD4974B006D8E70 /* BombModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BombModel.swift; sourceTree = "<group>"; };
-		7FBF38B12FD497E1006D8E70 /* BombViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BombViewModel.swift; sourceTree = "<group>"; };
-		7FBF38B22FD4991E006D8E70 /* BombView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BombView.swift; sourceTree = "<group>"; };
-		7FBF38B32FD49949006D8E70 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
-		7FBF38B42FD499BA006D8E70 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		F55D25FCE7CC479633FE1B15 /* GameViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GameViewModelTests.swift; path = GameViewModelTests.swift; sourceTree = "<group>"; };
+		7F33129FDCC0441187051D20 /* MoleViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MoleViewModelTests.swift; path = MoleViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7FBF38902FD4886D006D8E70 /* whack-a-mole */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "whack-a-mole";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		76ADEFDAC9A4FE054572142E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				958E2EAA05F6208727CEF3F1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FBF388B2FD4886D006D8E70 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -51,17 +59,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040C9C9FE68645DC6DB2C87B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				42EBDA9AA5C44F0C00F67AA8 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		7FBF38852FD4886D006D8E70 = {
 			isa = PBXGroup;
 			children = (
-				7FBF38902FD4886D006D8E70 /* whack-a-mole */,
 				7FBF388F2FD4886D006D8E70 /* Products */,
-				7FBF38A02FD48EA8006D8E70 /* Shared */,
-				7FBF38A42FD493A1006D8E70 /* App */,
-				7FBF38A52FD493F0006D8E70 /* Hole */,
-				7FBF38A92FD49450006D8E70 /* Game */,
-				7FBF38AB2FD4949C006D8E70 /* Mole */,
-				7FBF38AF2FD49745006D8E70 /* Bomb */,
+				7FBF38902FD4886D006D8E70 /* whack-a-mole */,
+				81D51CE4358166E755446B51 /* Frameworks */,
+				F89C2F63617FEDDF3D1249F7 /* whack-a-moleTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -69,67 +81,27 @@
 			isa = PBXGroup;
 			children = (
 				7FBF388E2FD4886D006D8E70 /* whack-a-mole.app */,
+				616CC519E0440EC7958D7F48 /* whack-a-moleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7FBF38A02FD48EA8006D8E70 /* Shared */ = {
+		81D51CE4358166E755446B51 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7FBF38A12FD48EAE006D8E70 /* GridPosition.swift */,
-				7FBF38A22FD48EAE006D8E70 /* GameState.swift */,
-				7FBF38A32FD48EAF006D8E70 /* GameConstants.swift */,
+				040C9C9FE68645DC6DB2C87B /* iOS */,
 			);
-			path = Shared;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7FBF38A42FD493A1006D8E70 /* App */ = {
+		F89C2F63617FEDDF3D1249F7 /* whack-a-moleTests */ = {
 			isa = PBXGroup;
 			children = (
-				7FBF38912FD4886D006D8E70 /* whack_a_moleApp.swift */,
-				7FBF38932FD4886D006D8E70 /* ContentView.swift */,
+				F55D25FCE7CC479633FE1B15 /* GameViewModelTests.swift */,
+				7F33129FDCC0441187051D20 /* MoleViewModelTests.swift */,
 			);
-			path = App;
-			sourceTree = "<group>";
-		};
-		7FBF38A52FD493F0006D8E70 /* Hole */ = {
-			isa = PBXGroup;
-			children = (
-				7FBF38A62FD493F3006D8E70 /* HoleModel.swift */,
-				7FBF38A72FD49418006D8E70 /* HoleViewModel.swift */,
-				7FBF38A82FD49418006D8E70 /* HoleView.swift */,
-			);
-			path = Hole;
-			sourceTree = "<group>";
-		};
-		7FBF38A92FD49450006D8E70 /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				7FBF38AA2FD49455006D8E70 /* GameBoardView.swift */,
-				7FBF38B32FD49949006D8E70 /* GameModel.swift */,
-				7FBF38B42FD499BA006D8E70 /* GameViewModel.swift */,
-			);
-			path = Game;
-			sourceTree = "<group>";
-		};
-		7FBF38AB2FD4949C006D8E70 /* Mole */ = {
-			isa = PBXGroup;
-			children = (
-				7FBF38AC2FD494A2006D8E70 /* MoleModel.swift */,
-				7FBF38AE2FD49533006D8E70 /* MoleView.swift */,
-				7FBF38AD2FD494C9006D8E70 /* MoleViewModel.swift */,
-			);
-			path = Mole;
-			sourceTree = "<group>";
-		};
-		7FBF38AF2FD49745006D8E70 /* Bomb */ = {
-			isa = PBXGroup;
-			children = (
-				7FBF38B02FD4974B006D8E70 /* BombModel.swift */,
-				7FBF38B12FD497E1006D8E70 /* BombViewModel.swift */,
-				7FBF38B22FD4991E006D8E70 /* BombView.swift */,
-			);
-			path = Bomb;
+			name = "whack-a-moleTests";
+			path = "whack-a-moleTests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,11 +123,27 @@
 				7FBF38902FD4886D006D8E70 /* whack-a-mole */,
 			);
 			name = "whack-a-mole";
-			packageProductDependencies = (
-			);
 			productName = "whack-a-mole";
 			productReference = 7FBF388E2FD4886D006D8E70 /* whack-a-mole.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B0F7CDD145B85EA38D39D6F4 /* whack-a-moleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75FF71BB0C2566C508760BE5 /* Build configuration list for PBXNativeTarget "whack-a-moleTests" */;
+			buildPhases = (
+				5FA8DF5C820FDB3711B52153 /* Sources */,
+				76ADEFDAC9A4FE054572142E /* Frameworks */,
+				5D073C09934EDDA0056FC649 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD696172FC2FAFCFD517AACD /* PBXTargetDependency */,
+			);
+			name = "whack-a-moleTests";
+			productName = "whack-a-moleTests";
+			productReference = 616CC519E0440EC7958D7F48 /* whack-a-moleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -169,6 +157,9 @@
 				TargetAttributes = {
 					7FBF388D2FD4886D006D8E70 = {
 						CreatedOnToolsVersion = 26.5;
+					};
+					B0F7CDD145B85EA38D39D6F4 = {
+						TestTargetID = 7FBF388D2FD4886D006D8E70;
 					};
 				};
 			};
@@ -187,11 +178,19 @@
 			projectRoot = "";
 			targets = (
 				7FBF388D2FD4886D006D8E70 /* whack-a-mole */,
+				B0F7CDD145B85EA38D39D6F4 /* whack-a-moleTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5D073C09934EDDA0056FC649 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FBF388C2FD4886D006D8E70 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -202,18 +201,53 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5FA8DF5C820FDB3711B52153 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDEBA63CF02712C59011236C /* GameViewModelTests.swift in Sources */,
+				BA4078795E4A4669A516EFE4 /* MoleViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FBF388A2FD4886D006D8E70 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FBF38942FD4886D006D8E70 /* ContentView.swift in Sources */,
-				7FBF38922FD4886D006D8E70 /* whack_a_moleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		AD696172FC2FAFCFD517AACD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "whack-a-mole";
+			target = 7FBF388D2FD4886D006D8E70 /* whack-a-mole */;
+			targetProxy = 70F78D2651B910BA8A7A249B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		75386D8D97A9D4067FF4C1DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.uk.rickbrown.whack-a-moleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/whack-a-mole.app/whack-a-mole";
+				TEST_TARGET_NAME = "whack-a-mole";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		7FBF38972FD4886F006D8E70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -399,9 +433,36 @@
 			};
 			name = Release;
 		};
+		CA43CC90EEE95ACB8C1F7018 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.uk.rickbrown.whack-a-moleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/whack-a-mole.app/whack-a-mole";
+				TEST_TARGET_NAME = "whack-a-mole";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		75FF71BB0C2566C508760BE5 /* Build configuration list for PBXNativeTarget "whack-a-moleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75386D8D97A9D4067FF4C1DB /* Release */,
+				CA43CC90EEE95ACB8C1F7018 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7FBF38892FD4886D006D8E70 /* Build configuration list for PBXProject "whack-a-mole" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

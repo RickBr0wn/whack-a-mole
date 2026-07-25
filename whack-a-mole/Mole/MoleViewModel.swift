@@ -13,7 +13,7 @@ final class MoleViewModel {
         self.mole = mole
     }
 
-    func whack() {
+    func markHit() {
         mole.isHit = true
     }
 }

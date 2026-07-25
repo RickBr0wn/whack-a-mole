@@ -12,17 +12,29 @@ final class GameViewModel {
     private var spawnTask: Task<Void, Never>?
     private var timerTask: Task<Void, Never>?
 
+    @ObservationIgnored
+    private var moleViewModels: [UUID: MoleViewModel] = [:]
+
+    @ObservationIgnored
+    private var bombViewModels: [UUID: BombViewModel] = [:]
+
+    @ObservationIgnored
+    private var moleDespawnTasks: [UUID: Task<Void, Never>] = [:]
+
+    @ObservationIgnored
+    private var bombDespawnTasks: [UUID: Task<Void, Never>] = [:]
+
     var state: GameState { game.state }
     var moles: [MoleModel] { game.moles }
     var bombs: [BombModel] { game.bombs }
     var elapsedTime: TimeInterval { game.elapsedTime }
 
     init(
-        game: GameModel = GameModel(),
+        game: GameModel? = nil,
         spawnInterval: TimeInterval = GameConstants.defaultSpawnInterval,
         bombProbability: Double = 0.15
     ) {
-        self.game = game
+        self.game = game ?? GameModel()
         self.spawnInterval = spawnInterval
         self.bombProbability = bombProbability
     }
@@ -39,6 +51,26 @@ final class GameViewModel {
         timerTask?.cancel()
         spawnTask = nil
         timerTask = nil
+
+        moleDespawnTasks.values.forEach { $0.cancel() }
+        bombDespawnTasks.values.forEach { $0.cancel() }
+        moleDespawnTasks.removeAll()
+        bombDespawnTasks.removeAll()
+
+        moleViewModels.removeAll()
+        bombViewModels.removeAll()
+
+        game.state = .idle
+        game.moles.removeAll()
+        game.bombs.removeAll()
+    }
+
+    func moleViewModel(for mole: MoleModel) -> MoleViewModel {
+        moleViewModels[mole.id] ?? MoleViewModel(mole: mole)
+    }
+
+    func bombViewModel(for bomb: BombModel) -> BombViewModel {
+        bombViewModels[bomb.id] ?? BombViewModel(bomb: bomb)
     }
 
     private func startSpawnLoop() {
@@ -47,6 +79,7 @@ final class GameViewModel {
         spawnTask = Task { [weak self] in
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(interval))
+                guard !Task.isCancelled else { return }
                 guard let self, self.state == .playing else { return }
                 self.spawn()
             }
@@ -60,6 +93,7 @@ final class GameViewModel {
         timerTask = Task { [weak self] in
             while !Task.isCancelled {
                 try? await Task.sleep(for: tickInterval)
+                guard !Task.isCancelled else { return }
                 guard let self, self.state == .playing else { return }
                 self.game.elapsedTime += tickSeconds
             }
@@ -85,27 +119,56 @@ final class GameViewModel {
         return allPositions.filter { !occupied.contains($0) }.randomElement()
     }
 
-    private func spawnMole(at position: GridPosition) {
-        let mole = MoleModel(position: position)
-        game.moles.append(mole)
-        let id = mole.id
-        let duration = mole.visibleDuration
-        Task { [weak self] in
+    private func scheduleDespawn(after duration: TimeInterval, onFire: @escaping () -> Void) -> Task<Void, Never> {
+        Task {
             try? await Task.sleep(for: .seconds(duration))
-            guard let self else { return }
-            self.game.moles.removeAll { $0.id == id }
+            guard !Task.isCancelled else { return }
+            onFire()
         }
     }
 
-    private func spawnBomb(at position: GridPosition) {
+    func spawnMole(at position: GridPosition) {
+        let mole = MoleModel(position: position)
+        game.moles.append(mole)
+        let id = mole.id
+        moleViewModels[id] = MoleViewModel(mole: mole)
+        moleDespawnTasks[id] = scheduleDespawn(after: mole.visibleDuration) { [weak self] in
+            guard let self else { return }
+            self.game.moles.removeAll { $0.id == id }
+            self.moleViewModels[id] = nil
+            self.moleDespawnTasks[id] = nil
+        }
+    }
+
+    func whack(mole: MoleModel) {
+        guard let index = game.moles.firstIndex(where: { $0.id == mole.id }), !game.moles[index].isHit else {
+            return
+        }
+
+        let id = mole.id
+        moleDespawnTasks[id]?.cancel()
+
+        game.moles[index].isHit = true
+        moleViewModels[id]?.markHit()
+
+        moleDespawnTasks[id] = scheduleDespawn(after: GameConstants.moleHitDisplayDuration) { [weak self] in
+            guard let self else { return }
+            self.game.moles.removeAll { $0.id == id }
+            self.moleViewModels[id] = nil
+            self.moleDespawnTasks[id] = nil
+        }
+    }
+
+    func spawnBomb(at position: GridPosition) {
         let bomb = BombModel(position: position)
         game.bombs.append(bomb)
         let id = bomb.id
-        let duration = bomb.visibleDuration
-        Task { [weak self] in
-            try? await Task.sleep(for: .seconds(duration))
+        bombViewModels[id] = BombViewModel(bomb: bomb)
+        bombDespawnTasks[id] = scheduleDespawn(after: bomb.visibleDuration) { [weak self] in
             guard let self else { return }
             self.game.bombs.removeAll { $0.id == id }
+            self.bombViewModels[id] = nil
+            self.bombDespawnTasks[id] = nil
         }
     }
 }
