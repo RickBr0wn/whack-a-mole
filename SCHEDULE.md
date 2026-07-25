@@ -4,12 +4,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ---
 
-## Phase 7: Scoring
-
-- [ ] **Wire scoring into GameViewModel:** `whack(mole:)` increments score. Combo increments on consecutive hits, resets on miss or timeout.
-
----
-
 ## Phase 8: Hat mole variant
 
 - [ ] **HatMole:** Extend `MoleModel` with `wearsHat: Bool`. `MoleView` renders `MoleHat`, `MoleHatHit`, or `MoleHatCracks` variants. Hat moles are worth double points.

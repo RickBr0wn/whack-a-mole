@@ -67,7 +67,7 @@ final class GameViewModelTests: XCTestCase {
     }
 
     func test_whack_marksMoleAsHitImmediately() {
-        let viewModel = GameViewModel()
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
         viewModel.spawnMole(at: GridPosition(column: 0, row: 0))
         defer { viewModel.stop() }
 
@@ -92,7 +92,7 @@ final class GameViewModelTests: XCTestCase {
     }
 
     func test_whack_removesMole_afterHitDisplayDuration() async {
-        let viewModel = GameViewModel()
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
         viewModel.spawnMole(at: GridPosition(column: 0, row: 0))
         defer { viewModel.stop() }
 
@@ -143,7 +143,7 @@ final class GameViewModelTests: XCTestCase {
     }
 
     func test_handleTap_whacksMole_atTappedPosition() {
-        let viewModel = GameViewModel()
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
         let position = GridPosition(column: 0, row: 0)
         viewModel.spawnMole(at: position)
         defer { viewModel.stop() }
@@ -166,7 +166,7 @@ final class GameViewModelTests: XCTestCase {
     }
 
     func test_handleTap_doesNothing_atEmptyPosition() {
-        let viewModel = GameViewModel(game: GameModel(state: .playing))
+        let viewModel = GameViewModel(game: GameModel(state: .playing), scoreViewModel: makeIsolatedScoreViewModel())
         defer { viewModel.stop() }
 
         viewModel.handleTap(at: GridPosition(column: 2, row: 2))
@@ -174,5 +174,62 @@ final class GameViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.moles.isEmpty)
         XCTAssertTrue(viewModel.bombs.isEmpty)
         XCTAssertEqual(viewModel.state, .playing)
+    }
+
+    func test_whack_registersHit_incrementsScore() {
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
+        let position = GridPosition(column: 0, row: 0)
+        viewModel.spawnMole(at: position)
+        defer { viewModel.stop() }
+
+        guard let mole = viewModel.moles.first else {
+            return XCTFail("Expected a spawned mole")
+        }
+
+        viewModel.whack(mole: mole)
+
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 1)
+        XCTAssertEqual(viewModel.scoreViewModel.points, GameConstants.basePointsPerHit)
+    }
+
+    func test_handleTap_atEmptyPosition_resetsCombo() {
+        let viewModel = GameViewModel(game: GameModel(state: .playing), scoreViewModel: makeIsolatedScoreViewModel())
+        let molePosition = GridPosition(column: 0, row: 0)
+        viewModel.spawnMole(at: molePosition)
+        defer { viewModel.stop() }
+
+        guard let mole = viewModel.moles.first else {
+            return XCTFail("Expected a spawned mole")
+        }
+        viewModel.whack(mole: mole)
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 1)
+
+        viewModel.handleTap(at: GridPosition(column: 2, row: 2))
+
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 0)
+    }
+
+    func test_moleTimeout_registersMiss_resetsCombo() async {
+        let viewModel = GameViewModel(scoreViewModel: makeIsolatedScoreViewModel())
+        let hitPosition = GridPosition(column: 0, row: 0)
+        let timeoutPosition = GridPosition(column: 1, row: 1)
+        viewModel.spawnMole(at: hitPosition)
+        defer { viewModel.stop() }
+
+        guard let moleToHit = viewModel.moles.first else {
+            return XCTFail("Expected a spawned mole")
+        }
+        viewModel.whack(mole: moleToHit)
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 1)
+
+        viewModel.spawnMole(at: timeoutPosition)
+        try? await Task.sleep(for: .seconds(GameConstants.defaultMoleVisibleDuration + 0.3))
+
+        XCTAssertEqual(viewModel.scoreViewModel.combo, 0)
+    }
+
+    private func makeIsolatedScoreViewModel() -> ScoreViewModel {
+        let userDefaults = UserDefaults(suiteName: UUID().uuidString)!
+        return ScoreViewModel(userDefaults: userDefaults)
     }
 }

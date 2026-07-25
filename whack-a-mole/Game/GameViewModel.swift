@@ -5,6 +5,7 @@ import Observation
 @MainActor
 final class GameViewModel {
     private(set) var game: GameModel
+    let scoreViewModel: ScoreViewModel
 
     let spawnInterval: TimeInterval
     let bombProbability: Double
@@ -31,10 +32,12 @@ final class GameViewModel {
 
     init(
         game: GameModel? = nil,
+        scoreViewModel: ScoreViewModel = ScoreViewModel(),
         spawnInterval: TimeInterval = GameConstants.defaultSpawnInterval,
         bombProbability: Double = 0.15
     ) {
         self.game = game ?? GameModel()
+        self.scoreViewModel = scoreViewModel
         self.spawnInterval = spawnInterval
         self.bombProbability = bombProbability
     }
@@ -137,6 +140,7 @@ final class GameViewModel {
             self.game.moles.removeAll { $0.id == id }
             self.moleViewModels[id] = nil
             self.moleDespawnTasks[id] = nil
+            self.scoreViewModel.register(hit: false)
         }
     }
 
@@ -145,6 +149,8 @@ final class GameViewModel {
             whack(mole: mole)
         } else if let bomb = game.bombs.first(where: { $0.position == position }) {
             triggerBomb(bomb: bomb)
+        } else {
+            scoreViewModel.register(hit: false)
         }
     }
 
@@ -158,6 +164,7 @@ final class GameViewModel {
 
         game.moles[index].isHit = true
         moleViewModels[id]?.markHit()
+        scoreViewModel.register(hit: true)
 
         moleDespawnTasks[id] = scheduleDespawn(after: GameConstants.moleHitDisplayDuration) { [weak self] in
             guard let self else { return }
@@ -203,7 +210,7 @@ final class GameViewModel {
 
 extension GameViewModel {
     static var preview: GameViewModel {
-        let viewModel = GameViewModel()
+        let viewModel = GameViewModel(scoreViewModel: .preview)
         viewModel.game = GameModel(
             state: .playing,
             moles: [MoleModel(position: GridPosition(column: 0, row: 0))],
