@@ -63,7 +63,9 @@ struct GameBoardView: View {
     @ViewBuilder
     private func occupant(at position: GridPosition) -> some View {
         if let mole = viewModel.moles.first(where: { $0.position == position }) {
-            MoleView(viewModel: viewModel.moleViewModel(for: mole))
+            MoleView(viewModel: viewModel.moleViewModel(for: mole)) {
+                viewModel.whack(mole: mole)
+            }
         } else if let bomb = viewModel.bombs.first(where: { $0.position == position }) {
             BombView(viewModel: viewModel.bombViewModel(for: bomb))
         }

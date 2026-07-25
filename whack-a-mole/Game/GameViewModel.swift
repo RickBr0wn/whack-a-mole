@@ -140,6 +140,25 @@ final class GameViewModel {
         }
     }
 
+    func whack(mole: MoleModel) {
+        guard let index = game.moles.firstIndex(where: { $0.id == mole.id }), !game.moles[index].isHit else {
+            return
+        }
+
+        let id = mole.id
+        moleDespawnTasks[id]?.cancel()
+
+        game.moles[index].isHit = true
+        moleViewModels[id]?.markHit()
+
+        moleDespawnTasks[id] = scheduleDespawn(after: GameConstants.moleHitDisplayDuration) { [weak self] in
+            guard let self else { return }
+            self.game.moles.removeAll { $0.id == id }
+            self.moleViewModels[id] = nil
+            self.moleDespawnTasks[id] = nil
+        }
+    }
+
     func spawnBomb(at position: GridPosition) {
         let bomb = BombModel(position: position)
         game.bombs.append(bomb)

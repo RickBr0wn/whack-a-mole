@@ -12,6 +12,10 @@ final class MoleViewModel {
     init(mole: MoleModel) {
         self.mole = mole
     }
+
+    func markHit() {
+        mole.isHit = true
+    }
 }
 
 extension MoleViewModel {

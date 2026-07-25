@@ -65,4 +65,44 @@ final class GameViewModelTests: XCTestCase {
 
         XCTAssertTrue(viewModel.bombViewModel(for: bomb) === viewModel.bombViewModel(for: bomb))
     }
+
+    func test_whack_marksMoleAsHitImmediately() {
+        let viewModel = GameViewModel()
+        viewModel.spawnMole(at: GridPosition(column: 0, row: 0))
+        defer { viewModel.stop() }
+
+        guard let mole = viewModel.moles.first else {
+            return XCTFail("Expected a spawned mole")
+        }
+
+        viewModel.whack(mole: mole)
+
+        XCTAssertTrue(viewModel.moles.first?.isHit ?? false)
+        XCTAssertTrue(viewModel.moleViewModel(for: mole).isHit)
+    }
+
+    func test_whack_doesNothing_forUnknownMole() {
+        let viewModel = GameViewModel()
+        defer { viewModel.stop() }
+        let unknownMole = MoleModel(position: GridPosition(column: 2, row: 2))
+
+        viewModel.whack(mole: unknownMole)
+
+        XCTAssertTrue(viewModel.moles.isEmpty)
+    }
+
+    func test_whack_removesMole_afterHitDisplayDuration() async {
+        let viewModel = GameViewModel()
+        viewModel.spawnMole(at: GridPosition(column: 0, row: 0))
+        defer { viewModel.stop() }
+
+        guard let mole = viewModel.moles.first else {
+            return XCTFail("Expected a spawned mole")
+        }
+
+        viewModel.whack(mole: mole)
+        try? await Task.sleep(for: .seconds(GameConstants.moleHitDisplayDuration + 0.2))
+
+        XCTAssertTrue(viewModel.moles.isEmpty)
+    }
 }

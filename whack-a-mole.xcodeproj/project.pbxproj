@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		958E2EAA05F6208727CEF3F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBDA9AA5C44F0C00F67AA8 /* Foundation.framework */; };
 		DDEBA63CF02712C59011236C /* GameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55D25FCE7CC479633FE1B15 /* GameViewModelTests.swift */; };
+		BA4078795E4A4669A516EFE4 /* MoleViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F33129FDCC0441187051D20 /* MoleViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +27,7 @@
 		616CC519E0440EC7958D7F48 /* whack-a-moleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "whack-a-moleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FBF388E2FD4886D006D8E70 /* whack-a-mole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "whack-a-mole.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F55D25FCE7CC479633FE1B15 /* GameViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GameViewModelTests.swift; path = GameViewModelTests.swift; sourceTree = "<group>"; };
+		7F33129FDCC0441187051D20 /* MoleViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MoleViewModelTests.swift; path = MoleViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				F55D25FCE7CC479633FE1B15 /* GameViewModelTests.swift */,
+				7F33129FDCC0441187051D20 /* MoleViewModelTests.swift */,
 			);
 			name = "whack-a-moleTests";
 			path = "whack-a-moleTests";
@@ -203,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDEBA63CF02712C59011236C /* GameViewModelTests.swift in Sources */,
+				BA4078795E4A4669A516EFE4 /* MoleViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
