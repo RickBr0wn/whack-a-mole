@@ -14,4 +14,8 @@ enum GameConstants {
     nonisolated static let difficultyDecayFactor: Double = 0.9
     nonisolated static let minimumSpawnInterval: TimeInterval = 0.3
     nonisolated static let minimumMoleVisibleDuration: TimeInterval = 0.5
+
+    nonisolated static let levelUpInterval: TimeInterval = 30
+    nonisolated static let bombProbabilityIncreasePerLevel: Double = 0.02
+    nonisolated static let maxBombProbability: Double = 0.5
 }

@@ -5,6 +5,7 @@ import Observation
 @MainActor
 final class GameViewModel {
     private(set) var game: GameModel
+    private(set) var difficulty: DifficultyModel = DifficultyModel()
     let scoreViewModel: ScoreViewModel
 
     let spawnInterval: TimeInterval
@@ -13,6 +14,9 @@ final class GameViewModel {
 
     private var spawnTask: Task<Void, Never>?
     private var timerTask: Task<Void, Never>?
+
+    @ObservationIgnored
+    private var nextLevelUpTime: TimeInterval = GameConstants.levelUpInterval
 
     @ObservationIgnored
     private var moleViewModels: [UUID: MoleViewModel] = [:]
@@ -30,6 +34,14 @@ final class GameViewModel {
     var moles: [MoleModel] { game.moles }
     var bombs: [BombModel] { game.bombs }
     var elapsedTime: TimeInterval { game.elapsedTime }
+    var level: Int { difficulty.level }
+
+    var effectiveBombProbability: Double {
+        min(
+            GameConstants.maxBombProbability,
+            bombProbability + Double(difficulty.level - 1) * GameConstants.bombProbabilityIncreasePerLevel
+        )
+    }
 
     init(
         game: GameModel? = nil,
@@ -48,6 +60,8 @@ final class GameViewModel {
     func start() {
         guard state != .playing else { return }
         game = GameModel(state: .playing)
+        difficulty = DifficultyModel(spawnInterval: spawnInterval)
+        nextLevelUpTime = GameConstants.levelUpInterval
         startSpawnLoop()
         startTimer()
     }
@@ -69,6 +83,9 @@ final class GameViewModel {
         game.state = .idle
         game.moles.removeAll()
         game.bombs.removeAll()
+
+        difficulty = DifficultyModel(spawnInterval: spawnInterval)
+        nextLevelUpTime = GameConstants.levelUpInterval
     }
 
     func moleViewModel(for mole: MoleModel) -> MoleViewModel {
@@ -81,12 +98,12 @@ final class GameViewModel {
 
     private func startSpawnLoop() {
         spawnTask?.cancel()
-        let interval = spawnInterval
         spawnTask = Task { [weak self] in
             while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(interval))
+                guard let self else { return }
+                try? await Task.sleep(for: .seconds(self.difficulty.spawnInterval))
                 guard !Task.isCancelled else { return }
-                guard let self, self.state == .playing else { return }
+                guard self.state == .playing else { return }
                 self.spawn()
             }
         }
@@ -101,14 +118,22 @@ final class GameViewModel {
                 try? await Task.sleep(for: tickInterval)
                 guard !Task.isCancelled else { return }
                 guard let self, self.state == .playing else { return }
-                self.game.elapsedTime += tickSeconds
+                self.tick(by: tickSeconds)
             }
+        }
+    }
+
+    func tick(by seconds: TimeInterval) {
+        game.elapsedTime += seconds
+        if game.elapsedTime >= nextLevelUpTime {
+            difficulty = difficulty.nextLevel()
+            nextLevelUpTime += GameConstants.levelUpInterval
         }
     }
 
     private func spawn() {
         guard let position = pickFreePosition() else { return }
-        if Double.random(in: 0..<1) < bombProbability {
+        if Double.random(in: 0..<1) < effectiveBombProbability {
             spawnBomb(at: position)
         } else {
             let wearsHat = Double.random(in: 0..<1) < hatMoleProbability
@@ -135,7 +160,7 @@ final class GameViewModel {
     }
 
     func spawnMole(at position: GridPosition, wearsHat: Bool = false) {
-        let mole = MoleModel(position: position, wearsHat: wearsHat)
+        let mole = MoleModel(position: position, wearsHat: wearsHat, visibleDuration: difficulty.visibleDuration)
         game.moles.append(mole)
         let id = mole.id
         moleViewModels[id] = MoleViewModel(mole: mole)
