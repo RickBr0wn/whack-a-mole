@@ -2,13 +2,11 @@ import SwiftUI
 
 struct MoleView: View {
     let viewModel: MoleViewModel
-    var onTap: () -> Void = {}
 
     var body: some View {
         Image(viewModel.isHit ? "MoleHit" : "Mole")
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .onTapGesture(perform: onTap)
     }
 }
 

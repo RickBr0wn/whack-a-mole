@@ -58,18 +58,18 @@ struct GameBoardView: View {
                 .offset(y: holeTop)
         }
         .frame(width: size, height: size, alignment: .top)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            viewModel.handleTap(at: position)
+        }
     }
 
     @ViewBuilder
     private func occupant(at position: GridPosition) -> some View {
         if let mole = viewModel.moles.first(where: { $0.position == position }) {
-            MoleView(viewModel: viewModel.moleViewModel(for: mole)) {
-                viewModel.whack(mole: mole)
-            }
+            MoleView(viewModel: viewModel.moleViewModel(for: mole))
         } else if let bomb = viewModel.bombs.first(where: { $0.position == position }) {
-            BombView(viewModel: viewModel.bombViewModel(for: bomb)) {
-                viewModel.triggerBomb(bomb: bomb)
-            }
+            BombView(viewModel: viewModel.bombViewModel(for: bomb))
         }
     }
 }

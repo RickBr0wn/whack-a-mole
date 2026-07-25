@@ -141,4 +141,38 @@ final class GameViewModelTests: XCTestCase {
 
         XCTAssertEqual(viewModel.state, .gameOver)
     }
+
+    func test_handleTap_whacksMole_atTappedPosition() {
+        let viewModel = GameViewModel()
+        let position = GridPosition(column: 0, row: 0)
+        viewModel.spawnMole(at: position)
+        defer { viewModel.stop() }
+
+        viewModel.handleTap(at: position)
+
+        XCTAssertTrue(viewModel.moles.first?.isHit ?? false)
+    }
+
+    func test_handleTap_triggersBomb_atTappedPosition() {
+        let viewModel = GameViewModel()
+        let position = GridPosition(column: 1, row: 1)
+        viewModel.spawnBomb(at: position)
+        defer { viewModel.stop() }
+
+        viewModel.handleTap(at: position)
+
+        XCTAssertTrue(viewModel.bombs.first?.isExploded ?? false)
+        XCTAssertEqual(viewModel.state, .gameOver)
+    }
+
+    func test_handleTap_doesNothing_atEmptyPosition() {
+        let viewModel = GameViewModel(game: GameModel(state: .playing))
+        defer { viewModel.stop() }
+
+        viewModel.handleTap(at: GridPosition(column: 2, row: 2))
+
+        XCTAssertTrue(viewModel.moles.isEmpty)
+        XCTAssertTrue(viewModel.bombs.isEmpty)
+        XCTAssertEqual(viewModel.state, .playing)
+    }
 }

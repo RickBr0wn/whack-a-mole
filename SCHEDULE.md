@@ -4,12 +4,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ---
 
-## Phase 6: Tap interaction
-
-- [ ] **Miss penalty:** Tapping an empty hole (or missing) does nothing — no penalty yet, just ensure no crash
-
----
-
 ## Phase 7: Scoring
 
 - [ ] **ScoreModel:** Struct with `points: Int`, `combo: Int`, `highScore: Int`. Pure logic: `func adding(hit:) -> ScoreModel`
