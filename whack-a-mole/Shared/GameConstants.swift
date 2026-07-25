@@ -10,4 +10,8 @@ enum GameConstants {
     nonisolated static let moleHitDisplayDuration: TimeInterval = 0.3
 
     nonisolated static let basePointsPerHit: Int = 100
+
+    nonisolated static let difficultyDecayFactor: Double = 0.9
+    nonisolated static let minimumSpawnInterval: TimeInterval = 0.3
+    nonisolated static let minimumMoleVisibleDuration: TimeInterval = 0.5
 }

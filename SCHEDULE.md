@@ -6,7 +6,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 9: Difficulty progression
 
-- [ ] **DifficultyModel:** Struct with `level: Int`, `spawnInterval: TimeInterval`, `visibleDuration: TimeInterval`. Pure function: `func nextLevel() -> DifficultyModel`
 - [ ] **Wire difficulty into GameViewModel:** Level increases every 30 seconds. Spawn interval shortens, visible duration shortens. Bomb frequency increases with level.
 
 ---
