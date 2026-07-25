@@ -11,13 +11,13 @@ struct ScoreModel: Equatable, Sendable {
         self.highScore = highScore
     }
 
-    func adding(hit: Bool) -> ScoreModel {
+    func adding(hit: Bool, multiplier: Int = 1) -> ScoreModel {
         guard hit else {
             return ScoreModel(points: points, combo: 0, highScore: highScore)
         }
 
         let newCombo = combo + 1
-        let newPoints = points + GameConstants.basePointsPerHit * newCombo
+        let newPoints = points + GameConstants.basePointsPerHit * newCombo * multiplier
         return ScoreModel(points: newPoints, combo: newCombo, highScore: max(highScore, newPoints))
     }
 }
