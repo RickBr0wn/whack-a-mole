@@ -3,7 +3,7 @@ import SwiftUI
 struct GameBoardView: View {
     let viewModel: GameViewModel
 
-    private static let spacing: CGFloat = 16
+    private static let minSpacing: CGFloat = 16
     private static let holeAspectRatio: CGFloat = 261.0 / 107.0
     private static let clipInset: CGFloat = 2
 
@@ -11,13 +11,15 @@ struct GameBoardView: View {
         GeometryReader { geometry in
             let columns = CGFloat(GameConstants.gridColumns)
             let rows = CGFloat(GameConstants.gridRows)
-            let cellWidth = (geometry.size.width - Self.spacing * (columns - 1)) / columns
-            let cellHeight = (geometry.size.height - Self.spacing * (rows - 1)) / rows
+            let cellWidth = (geometry.size.width - Self.minSpacing * (columns - 1)) / columns
+            let cellHeight = (geometry.size.height - Self.minSpacing * (rows - 1)) / rows
             let cellSize = min(cellWidth, cellHeight)
+            let leftoverWidth = geometry.size.width - cellSize * columns
+            let horizontalSpacing = columns > 1 ? max(Self.minSpacing, leftoverWidth / (columns - 1)) : Self.minSpacing
 
-            VStack(spacing: Self.spacing) {
+            VStack(spacing: Self.minSpacing) {
                 ForEach(0..<GameConstants.gridRows, id: \.self) { row in
-                    HStack(spacing: Self.spacing) {
+                    HStack(spacing: horizontalSpacing) {
                         ForEach(0..<GameConstants.gridColumns, id: \.self) { column in
                             cell(at: GridPosition(column: column, row: row), size: cellSize)
                         }
