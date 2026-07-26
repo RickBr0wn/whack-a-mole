@@ -6,7 +6,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ## Phase 11: Audio
 
-- [ ] **AudioManager:** `actor`. Loads and plays sounds using `AVFoundation`. Methods: `playWhack()`, `playBombExplosion()`, `playGameOver()`.
 - [ ] **Wire audio into GameViewModel:** Call `AudioManager` on whack, bomb trigger, and game over.
 
 ---
