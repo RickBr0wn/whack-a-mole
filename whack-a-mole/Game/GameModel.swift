@@ -18,3 +18,9 @@ struct GameModel: Sendable {
         self.elapsedTime = elapsedTime
     }
 }
+
+struct ScorePopEvent: Identifiable, Equatable, Sendable {
+    let id = UUID()
+    let position: GridPosition
+    let points: Int
+}

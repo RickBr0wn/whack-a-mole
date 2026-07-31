@@ -23,9 +23,12 @@ final class ScoreViewModel {
         )
     }
 
-    func register(hit: Bool, multiplier: Int = 1) {
+    @discardableResult
+    func register(hit: Bool, multiplier: Int = 1) -> Int {
+        let previousPoints = score.points
         score = score.adding(hit: hit, multiplier: multiplier)
         userDefaults.set(score.highScore, forKey: Self.highScoreKey)
+        return score.points - previousPoints
     }
 
     func reset() {

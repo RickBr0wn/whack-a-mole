@@ -41,6 +41,7 @@ struct GameBoardView: View {
         let visibleHeight = holeTop + holeHeight - Self.clipInset
         let mole = viewModel.moles.first(where: { $0.position == position })
         let bomb = viewModel.bombs.first(where: { $0.position == position })
+        let scorePopEvent = viewModel.lastScorePop.flatMap { $0.position == position ? $0 : nil }
 
         ZStack(alignment: .top) {
             Image("HoleBack")
@@ -62,6 +63,10 @@ struct GameBoardView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: size, height: holeHeight)
+                .offset(y: holeTop)
+
+            ScorePopView(event: scorePopEvent)
+                .frame(width: size, alignment: .top)
                 .offset(y: holeTop)
         }
         .frame(width: size, height: size, alignment: .top)
@@ -146,6 +151,50 @@ private struct HoleOccupantView: View {
                 try? await Task.sleep(for: .seconds(Self.popDuration))
                 if displayedMole?.id == staleMoleID {
                     displayedMole = nil
+                }
+            }
+        }
+    }
+}
+
+/// Floats "+N" up from a hole and fades it out when a `ScorePopEvent` arrives
+/// for that position. Retains the event briefly in local state after it's
+/// consumed, the same "hold, animate, then self-clear" pattern used by
+/// `HoleOccupantView` for the mole retreat animation.
+private struct ScorePopView: View {
+    let event: ScorePopEvent?
+
+    @State private var displayedEvent: ScorePopEvent?
+    @State private var riseOffset: CGFloat = 0
+    @State private var opacity: Double = 0
+
+    private static let duration: TimeInterval = 0.6
+    private static let riseDistance: CGFloat = 40
+
+    var body: some View {
+        Group {
+            if let displayedEvent {
+                Text("+\(displayedEvent.points)")
+                    .font(.headline.bold())
+                    .foregroundStyle(.yellow)
+                    .offset(y: riseOffset)
+                    .opacity(opacity)
+            }
+        }
+        .onChange(of: event) { _, newEvent in
+            guard let newEvent else { return }
+            displayedEvent = newEvent
+            riseOffset = 0
+            opacity = 1
+            withAnimation(.easeOut(duration: Self.duration)) {
+                riseOffset = -Self.riseDistance
+                opacity = 0
+            }
+            let eventID = newEvent.id
+            Task {
+                try? await Task.sleep(for: .seconds(Self.duration))
+                if displayedEvent?.id == eventID {
+                    displayedEvent = nil
                 }
             }
         }

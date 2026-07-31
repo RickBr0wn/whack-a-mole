@@ -60,6 +60,23 @@ final class ScoreViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.points, GameConstants.basePointsPerHit * 2)
     }
 
+    func test_register_hit_returnsPointsAwarded() {
+        let viewModel = ScoreViewModel(userDefaults: userDefaults)
+        viewModel.register(hit: true)
+
+        let awarded = viewModel.register(hit: true, multiplier: 2)
+
+        XCTAssertEqual(awarded, GameConstants.basePointsPerHit * 2 * 2)
+    }
+
+    func test_register_miss_returnsZeroPointsAwarded() {
+        let viewModel = ScoreViewModel(userDefaults: userDefaults)
+
+        let awarded = viewModel.register(hit: false)
+
+        XCTAssertEqual(awarded, 0)
+    }
+
     func test_reset_zeroesPointsAndCombo_keepsHighScore() {
         let viewModel = ScoreViewModel(userDefaults: userDefaults)
         viewModel.register(hit: true)
