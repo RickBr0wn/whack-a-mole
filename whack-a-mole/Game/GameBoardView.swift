@@ -48,9 +48,7 @@ struct GameBoardView: View {
                 .frame(width: size, height: holeHeight)
                 .offset(y: holeTop)
 
-            occupant(at: position)
-                .frame(width: size, height: visibleHeight, alignment: .top)
-                .clipped()
+            occupant(at: position, size: size, visibleHeight: visibleHeight)
                 .animation(.easeOut(duration: 0.3), value: moleID)
 
             Image("HoleFront")
@@ -67,12 +65,16 @@ struct GameBoardView: View {
     }
 
     @ViewBuilder
-    private func occupant(at position: GridPosition) -> some View {
+    private func occupant(at position: GridPosition, size: CGFloat, visibleHeight: CGFloat) -> some View {
         if let mole = viewModel.moles.first(where: { $0.position == position }) {
             MoleView(viewModel: viewModel.moleViewModel(for: mole))
+                .frame(width: size, height: visibleHeight, alignment: .top)
+                .clipped()
                 .transition(.move(edge: .bottom))
         } else if let bomb = viewModel.bombs.first(where: { $0.position == position }) {
             BombView(viewModel: viewModel.bombViewModel(for: bomb))
+                .frame(width: size, height: visibleHeight, alignment: .top)
+                .clipped()
         }
     }
 }
