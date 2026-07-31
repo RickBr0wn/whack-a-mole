@@ -39,6 +39,7 @@ struct GameBoardView: View {
         let holeHeight = size / Self.holeAspectRatio
         let holeTop = (size - holeHeight) / 2
         let visibleHeight = holeTop + holeHeight - Self.clipInset
+        let moleID = viewModel.moles.first(where: { $0.position == position })?.id
 
         ZStack(alignment: .top) {
             Image("HoleBack")
@@ -50,6 +51,7 @@ struct GameBoardView: View {
             occupant(at: position)
                 .frame(width: size, height: visibleHeight, alignment: .top)
                 .clipped()
+                .animation(.easeOut(duration: 0.3), value: moleID)
 
             Image("HoleFront")
                 .resizable()
@@ -68,6 +70,7 @@ struct GameBoardView: View {
     private func occupant(at position: GridPosition) -> some View {
         if let mole = viewModel.moles.first(where: { $0.position == position }) {
             MoleView(viewModel: viewModel.moleViewModel(for: mole))
+                .transition(.move(edge: .bottom))
         } else if let bomb = viewModel.bombs.first(where: { $0.position == position }) {
             BombView(viewModel: viewModel.bombViewModel(for: bomb))
         }
