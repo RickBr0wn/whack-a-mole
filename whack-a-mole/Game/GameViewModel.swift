@@ -8,6 +8,7 @@ final class GameViewModel {
     private(set) var difficulty: DifficultyModel = DifficultyModel()
     let scoreViewModel: ScoreViewModel
     let audioManager: AudioManager
+    private(set) var lastScorePop: ScorePopEvent?
 
     let spawnInterval: TimeInterval
     let bombProbability: Double
@@ -210,7 +211,8 @@ final class GameViewModel {
 
         game.moles[index].isHit = true
         moleViewModels[id]?.markHit()
-        scoreViewModel.register(hit: true, multiplier: game.moles[index].wearsHat ? 2 : 1)
+        let awardedPoints = scoreViewModel.register(hit: true, multiplier: game.moles[index].wearsHat ? 2 : 1)
+        lastScorePop = ScorePopEvent(position: game.moles[index].position, points: awardedPoints)
 
         moleDespawnTasks[id] = scheduleDespawn(after: GameConstants.moleHitDisplayDuration) { [weak self] in
             guard let self else { return }
