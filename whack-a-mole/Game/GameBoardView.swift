@@ -39,7 +39,8 @@ struct GameBoardView: View {
         let holeHeight = size / Self.holeAspectRatio
         let holeTop = (size - holeHeight) / 2
         let visibleHeight = holeTop + holeHeight - Self.clipInset
-        let moleID = viewModel.moles.first(where: { $0.position == position })?.id
+        let mole = viewModel.moles.first(where: { $0.position == position })
+        let bomb = viewModel.bombs.first(where: { $0.position == position })
 
         ZStack(alignment: .top) {
             Image("HoleBack")
@@ -48,8 +49,14 @@ struct GameBoardView: View {
                 .frame(width: size, height: holeHeight)
                 .offset(y: holeTop)
 
-            occupant(at: position, size: size, visibleHeight: visibleHeight)
-                .animation(.easeOut(duration: 0.3), value: moleID)
+            HoleOccupantView(
+                mole: mole,
+                bomb: bomb,
+                size: size,
+                visibleHeight: visibleHeight,
+                moleViewModel: viewModel.moleViewModel(for:),
+                bombViewModel: viewModel.bombViewModel(for:)
+            )
 
             Image("HoleFront")
                 .resizable()
@@ -63,18 +70,84 @@ struct GameBoardView: View {
             viewModel.handleTap(at: position)
         }
     }
+}
 
-    @ViewBuilder
-    private func occupant(at position: GridPosition, size: CGFloat, visibleHeight: CGFloat) -> some View {
-        if let mole = viewModel.moles.first(where: { $0.position == position }) {
-            MoleView(viewModel: viewModel.moleViewModel(for: mole))
-                .frame(width: size, height: visibleHeight, alignment: .top)
-                .clipped()
-                .transition(.move(edge: .bottom))
-        } else if let bomb = viewModel.bombs.first(where: { $0.position == position }) {
-            BombView(viewModel: viewModel.bombViewModel(for: bomb))
-                .frame(width: size, height: visibleHeight, alignment: .top)
-                .clipped()
+/// Owns the pop-up/pop-down animation for a single hole. The clip window stays
+/// permanently present so it always masks content correctly; only the mole's
+/// offset inside it is animated. A retreating mole is retained briefly in
+/// `displayedMole` after `GameViewModel` removes it from the model, so there's
+/// something left to animate sliding back down.
+private struct HoleOccupantView: View {
+    let mole: MoleModel?
+    let bomb: BombModel?
+    let size: CGFloat
+    let visibleHeight: CGFloat
+    let moleViewModel: (MoleModel) -> MoleViewModel
+    let bombViewModel: (BombModel) -> BombViewModel
+
+    @State private var displayedMole: MoleModel?
+    @State private var isMoleRisen: Bool
+
+    private static let popDuration: TimeInterval = 0.3
+
+    init(
+        mole: MoleModel?,
+        bomb: BombModel?,
+        size: CGFloat,
+        visibleHeight: CGFloat,
+        moleViewModel: @escaping (MoleModel) -> MoleViewModel,
+        bombViewModel: @escaping (BombModel) -> BombViewModel
+    ) {
+        self.mole = mole
+        self.bomb = bomb
+        self.size = size
+        self.visibleHeight = visibleHeight
+        self.moleViewModel = moleViewModel
+        self.bombViewModel = bombViewModel
+        _displayedMole = State(initialValue: mole)
+        _isMoleRisen = State(initialValue: mole != nil)
+    }
+
+    var body: some View {
+        ZStack(alignment: .top) {
+            if let displayedMole {
+                MoleView(viewModel: moleViewModel(displayedMole))
+                    .offset(y: isMoleRisen ? 0 : visibleHeight)
+            }
+            if let bomb {
+                BombView(viewModel: bombViewModel(bomb))
+            }
+        }
+        .frame(width: size, height: visibleHeight, alignment: .top)
+        .clipped()
+        .onChange(of: mole) { _, newMole in
+            syncMole(newMole)
+        }
+    }
+
+    private func syncMole(_ newMole: MoleModel?) {
+        guard newMole?.id != displayedMole?.id else {
+            displayedMole = newMole
+            return
+        }
+
+        if let newMole {
+            displayedMole = newMole
+            isMoleRisen = false
+            withAnimation(.easeOut(duration: Self.popDuration)) {
+                isMoleRisen = true
+            }
+        } else {
+            withAnimation(.easeOut(duration: Self.popDuration)) {
+                isMoleRisen = false
+            }
+            let staleMoleID = displayedMole?.id
+            Task {
+                try? await Task.sleep(for: .seconds(Self.popDuration))
+                if displayedMole?.id == staleMoleID {
+                    displayedMole = nil
+                }
+            }
         }
     }
 }
