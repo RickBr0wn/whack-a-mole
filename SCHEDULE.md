@@ -4,12 +4,6 @@ Each item below is one commit. Work top to bottom. Do not skip ahead.
 
 ---
 
-## Phase 11: Audio
-
-- [ ] **Wire audio into GameViewModel:** Call `AudioManager` on whack, bomb trigger, and game over.
-
----
-
 ## Phase 12: Animations
 
 - [ ] **Mole pop animation:** Mole slides up from the hole on spawn, slides down on retreat. Use `withAnimation` + offset.

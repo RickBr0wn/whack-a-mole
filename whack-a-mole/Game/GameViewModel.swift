@@ -7,6 +7,7 @@ final class GameViewModel {
     private(set) var game: GameModel
     private(set) var difficulty: DifficultyModel = DifficultyModel()
     let scoreViewModel: ScoreViewModel
+    let audioManager: AudioManager
 
     let spawnInterval: TimeInterval
     let bombProbability: Double
@@ -46,12 +47,14 @@ final class GameViewModel {
     init(
         game: GameModel? = nil,
         scoreViewModel: ScoreViewModel = ScoreViewModel(),
+        audioManager: AudioManager = AudioManager(),
         spawnInterval: TimeInterval = GameConstants.defaultSpawnInterval,
         bombProbability: Double = 0.15,
         hatMoleProbability: Double = 0.2
     ) {
         self.game = game ?? GameModel()
         self.scoreViewModel = scoreViewModel
+        self.audioManager = audioManager
         self.spawnInterval = spawnInterval
         self.bombProbability = bombProbability
         self.hatMoleProbability = hatMoleProbability
@@ -195,6 +198,7 @@ final class GameViewModel {
         }
 
         let id = mole.id
+        Task { await audioManager.playWhack() }
 
         if game.moles[index].wearsHat, !game.moles[index].isCracked {
             game.moles[index].isCracked = true
@@ -227,6 +231,7 @@ final class GameViewModel {
 
         game.bombs[index].isExploded = true
         bombViewModels[id]?.explode()
+        Task { await audioManager.playBombExplosion() }
 
         spawnTask?.cancel()
         timerTask?.cancel()
@@ -234,6 +239,7 @@ final class GameViewModel {
         timerTask = nil
 
         game.state = .gameOver
+        Task { await audioManager.playGameOver() }
     }
 
     func spawnBomb(at position: GridPosition) {
