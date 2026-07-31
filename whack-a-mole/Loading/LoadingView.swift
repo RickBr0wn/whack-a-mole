@@ -8,6 +8,8 @@ struct LoadingView: View {
             Image("LoadingScreenBackground")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .clipped()
                 .ignoresSafeArea()
 
             ProgressView(value: viewModel.progress)
