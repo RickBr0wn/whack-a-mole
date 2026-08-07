@@ -1,14 +1,25 @@
 import AVFoundation
 
 actor AudioManager {
+    private static let isMutedKey = "isSoundMuted"
+
     private var whackPlayer: AVAudioPlayer?
     private var bombExplosionPlayer: AVAudioPlayer?
     private var gameOverPlayer: AVAudioPlayer?
+    private var isMuted: Bool
+    private let userDefaults: UserDefaults
 
-    init() {
+    init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
+        self.isMuted = userDefaults.bool(forKey: Self.isMutedKey)
         whackPlayer = Self.loadPlayer(named: "whack")
         bombExplosionPlayer = Self.loadPlayer(named: "bomb_explosion")
         gameOverPlayer = Self.loadPlayer(named: "game_over")
+    }
+
+    func setMuted(_ muted: Bool) {
+        isMuted = muted
+        userDefaults.set(muted, forKey: Self.isMutedKey)
     }
 
     func playWhack() {
@@ -24,7 +35,7 @@ actor AudioManager {
     }
 
     private func play(_ player: AVAudioPlayer?) {
-        guard let player else { return }
+        guard !isMuted, let player else { return }
         player.stop()
         player.currentTime = 0
         player.play()
@@ -35,5 +46,9 @@ actor AudioManager {
             return nil
         }
         return try? AVAudioPlayer(contentsOf: url)
+    }
+
+    nonisolated static func loadIsMuted(userDefaults: UserDefaults = .standard) -> Bool {
+        userDefaults.bool(forKey: isMutedKey)
     }
 }

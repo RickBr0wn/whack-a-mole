@@ -18,4 +18,6 @@ enum GameConstants {
     nonisolated static let levelUpInterval: TimeInterval = 30
     nonisolated static let bombProbabilityIncreasePerLevel: Double = 0.02
     nonisolated static let maxBombProbability: Double = 0.5
+
+    nonisolated static let loadingScreenDuration: TimeInterval = 1.5
 }

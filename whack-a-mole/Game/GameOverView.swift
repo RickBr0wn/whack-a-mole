@@ -3,6 +3,7 @@ import SwiftUI
 struct GameOverView: View {
     let scoreViewModel: ScoreViewModel
     var onRestart: () -> Void = {}
+    var onMainMenu: () -> Void = {}
 
     var body: some View {
         VStack(spacing: 24) {
@@ -16,8 +17,14 @@ struct GameOverView: View {
                     .font(.title3.monospacedDigit())
             }
 
-            Button("Restart", action: onRestart)
-                .buttonStyle(.borderedProminent)
+            VStack(spacing: 12) {
+                Button("Restart", action: onRestart)
+                    .buttonStyle(.borderedProminent)
+
+                Button("Main Menu", action: onMainMenu)
+                    .buttonStyle(.bordered)
+                    .tint(.white)
+            }
         }
         .padding()
         .foregroundStyle(.white)
