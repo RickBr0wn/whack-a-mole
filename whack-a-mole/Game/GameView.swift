@@ -2,13 +2,11 @@ import SwiftUI
 
 struct GameView: View {
     @State private var viewModel: GameViewModel
+    var onExitToMenu: () -> Void = {}
 
-    init(viewModel: GameViewModel) {
+    init(viewModel: GameViewModel, onExitToMenu: @escaping () -> Void = {}) {
         self._viewModel = State(initialValue: viewModel)
-    }
-
-    init() {
-        self._viewModel = State(initialValue: GameViewModel())
+        self.onExitToMenu = onExitToMenu
     }
 
     var body: some View {
@@ -18,7 +16,11 @@ struct GameView: View {
                     Text(String(format: "Time: %.1fs", viewModel.elapsedTime))
                         .font(.title3.monospacedDigit())
                     Spacer()
-                    controlButton
+                    Button("Menu") {
+                        viewModel.stop()
+                        onExitToMenu()
+                    }
+                    .buttonStyle(.bordered)
                 }
                 .padding(.horizontal)
 
@@ -34,22 +36,12 @@ struct GameView: View {
                 Color.black.opacity(0.6)
                     .ignoresSafeArea()
 
-                GameOverView(scoreViewModel: viewModel.scoreViewModel) {
-                    viewModel.restart()
-                }
+                GameOverView(
+                    scoreViewModel: viewModel.scoreViewModel,
+                    onRestart: { viewModel.restart() },
+                    onMainMenu: onExitToMenu
+                )
             }
-        }
-    }
-
-    @ViewBuilder
-    private var controlButton: some View {
-        switch viewModel.state {
-        case .playing:
-            Button("Stop") { viewModel.stop() }
-                .buttonStyle(.borderedProminent)
-        case .idle, .gameOver:
-            Button("Start") { viewModel.start() }
-                .buttonStyle(.borderedProminent)
         }
     }
 }
